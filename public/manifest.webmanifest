@@ -1,7 +1,7 @@
 {
   "name": "Coded — learn how software works",
   "short_name": "Coded",
-  "description": "Collect concept cards, earn XP, and ship real code in a browser sandbox. Free, no account, works offline.",
+  "description": "Commit concept cards to memory, earn XP, and ship real code in a browser sandbox. Free, no account, works offline.",
   "id": "./",
   "start_url": "./#/",
   "scope": "./",

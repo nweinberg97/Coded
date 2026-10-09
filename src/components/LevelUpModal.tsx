@@ -2,7 +2,7 @@ import type { LevelDef } from '../engine/levels';
 import { Icon } from './Icon';
 import { Modal } from './ui';
 
-// The level-up "pack opening" — only ever shown when the engine's computed
+// The level-up "release" — only ever shown when the engine's computed
 // level actually rises above the last level the learner celebrated.
 export function LevelUpModal({ def, onClose, isDemo }: { def: LevelDef; onClose: () => void; isDemo?: boolean }) {
   return (
@@ -11,8 +11,8 @@ export function LevelUpModal({ def, onClose, isDemo }: { def: LevelDef; onClose:
         <div className="pack-burst" aria-hidden />
         <div className="pack-card">
           <div className="pack-top">
-            <span className="mono">{isDemo ? 'DEMO PROFILE' : 'LEVEL UNLOCKED'}</span>
-            <span className="mono">#{String(def.level).padStart(2, '0')}/07</span>
+            <span className="mono">{isDemo ? 'DEMO BUILD' : 'NEW RELEASE'}</span>
+            <span className="mono">v{def.level}.0.0</span>
           </div>
           <div className="pack-level">
             <span>LV</span>
@@ -25,7 +25,7 @@ export function LevelUpModal({ def, onClose, isDemo }: { def: LevelDef; onClose:
         </div>
       </div>
       <div className="pack-unlocks">
-        <div className="eyebrow">Just unlocked</div>
+        <div className="eyebrow">Changelog</div>
         <ul>
           {def.unlocks.map((u) => (
             <li key={u}>

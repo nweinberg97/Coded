@@ -299,7 +299,7 @@ await step('demo: write, run and ship a real challenge', async () => {
 console.log('\nResponsive + keyboard');
 await step('mobile layouts render without horizontal scroll', async () => {
   const m = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  for (const path of ['', 'learn', 'vault', 'build/first-webpage', 'demo', 'me']) {
+  for (const path of ['', 'learn', 'repo', 'vault', 'module/ai', 'build/first-webpage', 'demo', 'me']) {
     await m.goto(`${base}#/${path}`);
     await m.waitForTimeout(400);
     const overflow = await m.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

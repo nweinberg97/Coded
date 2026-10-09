@@ -23,7 +23,7 @@ export const LEVELS: LevelDef[] = [
     xp: 0,
     concepts: [],
     challenges: [],
-    unlocks: ['The Internet set', 'How Websites Work set', 'Drops 01–02'],
+    unlocks: ['The Internet module', 'How Websites Work module', 'Drops 01–02'],
   },
   {
     level: 2,
@@ -32,7 +32,7 @@ export const LEVELS: LevelDef[] = [
     xp: 100,
     concepts: ['client', 'server', 'browser', 'html'],
     challenges: [],
-    unlocks: ['Programming Fundamentals set', 'Drop 03 · Make a button work'],
+    unlocks: ['Programming Fundamentals module', 'Drop 03 · Make a button work'],
   },
   {
     level: 3,
@@ -41,7 +41,7 @@ export const LEVELS: LevelDef[] = [
     xp: 250,
     concepts: ['http', 'css', 'javascript', 'dom'],
     challenges: ['first-webpage'],
-    unlocks: ['APIs & Integrations set', 'AI & Modern Software set', 'Drops 04–05'],
+    unlocks: ['APIs & Integrations module', 'AI & Modern Software module', 'Drops 04–05'],
   },
   {
     level: 4,
@@ -50,7 +50,7 @@ export const LEVELS: LevelDef[] = [
     xp: 450,
     concepts: ['variable', 'function', 'conditional', 'array'],
     challenges: ['button-counter'],
-    unlocks: ['Databases & Data set', 'Drop 06 · Understand an API'],
+    unlocks: ['Databases & Data module', 'Drop 06 · Understand an API'],
   },
   {
     level: 5,
@@ -59,7 +59,7 @@ export const LEVELS: LevelDef[] = [
     xp: 700,
     concepts: ['api', 'json', 'http-get', 'status-code'],
     challenges: ['data-transform'],
-    unlocks: ['Software Architecture set', 'Drop 07 · Build a mini database'],
+    unlocks: ['Software Architecture module', 'Drop 07 · Build a mini database'],
   },
   {
     level: 6,
@@ -68,7 +68,7 @@ export const LEVELS: LevelDef[] = [
     xp: 1000,
     concepts: ['database', 'sql', 'primary-key', 'authentication'],
     challenges: ['api-inspector'],
-    unlocks: ['Developer Workflow set', 'Drop 08 · Ship a mini app'],
+    unlocks: ['Developer Workflow module', 'Drop 08 · Ship a mini app'],
   },
   {
     level: 7,

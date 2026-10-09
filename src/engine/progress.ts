@@ -222,7 +222,7 @@ export function reduce(s: ProgressState, a: Action): ProgressState {
             id: `track:${c.trackId}`,
             amount: XP_RULES.trackComplete,
             reason: 'track',
-            label: `Set complete · ${track?.name ?? c.trackId}`,
+            label: `Module complete · ${track?.name ?? c.trackId}`,
             at: a.now,
           });
         }

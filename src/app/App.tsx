@@ -15,7 +15,7 @@ import { EmptyState } from '../components/ui';
 import { STORAGE_KEY } from '../engine/storage';
 
 const TITLES: Record<string, string> = {
-  '': 'Home', learn: 'Learn', vault: 'Vault', card: 'Card', set: 'Set', build: 'Build', demo: 'Demo', me: 'You',
+  '': 'Home', learn: 'Learn', repo: 'Repo', vault: 'Repo', card: 'Card', module: 'Module', set: 'Module', build: 'Build', demo: 'Demo', me: 'You',
 };
 
 export function App() {
@@ -35,13 +35,15 @@ export function App() {
     case 'learn':
       page = <LearnPage route={route} />;
       break;
-    case 'vault':
+    case 'repo':
+    case 'vault': // old link, still works
       page = <VaultPage />;
       break;
     case 'card':
       page = <CardPage key={id} id={id ?? ''} />;
       break;
-    case 'set':
+    case 'module':
+    case 'set': // old link, still works
       page = <SetPage key={id} id={id ?? ''} />;
       break;
     case 'build':
@@ -56,7 +58,7 @@ export function App() {
     default:
       page = (
         <div className="page">
-          <EmptyState icon="search" title="This page doesn’t exist" body="404 — a status code you’ll learn about in the APIs set." action={<Link className="btn btn-primary" to="/">Go home</Link>} />
+          <EmptyState icon="search" title="This page doesn’t exist" body="404 — a status code you’ll learn about in the APIs module." action={<Link className="btn btn-primary" to="/">Go home</Link>} />
         </div>
       );
   }

@@ -11,7 +11,7 @@ import { XP_RULES } from '../engine/progress';
 export function SetPage({ id }: { id: string }) {
   const p = useProgress();
   const track = TRACK_BY_ID[id as TrackId];
-  if (!track) return <div className="page"><EmptyState title="Set not found" action={<Link className="btn btn-primary" to="/vault">Back to the Vault</Link>} /></div>;
+  if (!track) return <div className="page"><EmptyState title="Module not found" action={<Link className="btn btn-primary" to="/repo">Back to your repo</Link>} /></div>;
   const cards = conceptsInTrack(track.id);
   const got = cards.filter((c) => p.learned(c.id)).length;
   const locked = track.unlockLevel > p.level;
@@ -22,15 +22,15 @@ export function SetPage({ id }: { id: string }) {
         <div className="set-hero-bg" aria-hidden />
         <TrackCover track={track} size={220} />
         <div className="set-hero-text">
-          <div className="eyebrow">Set · {cards.length} cards</div>
+          <div className="eyebrow">Module · {cards.length} cards</div>
           <h1 className="h-display h-set">{track.name}</h1>
           <p className="lede">{track.description}</p>
           <div className="set-meta">
-            <span>{got}/{cards.length} collected</span>
+            <span>{got}/{cards.length} committed</span>
             <span>·</span>
             <span>{locked ? `🔒 XP unlocks at Level ${track.unlockLevel}` : 'Unlocked'}</span>
             <span>·</span>
-            <span>+{XP_RULES.trackComplete} XP for completing the set</span>
+            <span>+{XP_RULES.trackComplete} XP for completing the module</span>
           </div>
         </div>
       </header>
@@ -39,14 +39,14 @@ export function SetPage({ id }: { id: string }) {
           <Icon name="play" size={26} />
         </button>
         <button className="btn btn-ghost" onClick={() => navigate(`/learn?track=${track.id}&mode=shuffle`)}>
-          <Icon name="shuffle" size={16} /> Shuffle set
+          <Icon name="shuffle" size={16} /> Shuffle module
         </button>
       </div>
       <ol className="tracklist">
         <li className="tracklist-head" aria-hidden>
           <span>#</span>
           <span>Card</span>
-          <span className="hide-sm">Rarity</span>
+          <span className="hide-sm">Complexity</span>
           <span className="hide-sm">Status</span>
           <span className="hide-sm">Review</span>
         </li>

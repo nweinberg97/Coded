@@ -188,8 +188,8 @@ export function LearnPage({ route }: { route: Route }) {
           <span className="sr-only">Search cards</span>
           <input ref={searchRef} type="search" placeholder="Search cards…  /" value={search} onChange={(e) => setSearch(e.target.value)} />
         </label>
-        <select aria-label="Filter by set" value={track} onChange={(e) => setParam('track', e.target.value)}>
-          <option value="">All sets</option>
+        <select aria-label="Filter by module" value={track} onChange={(e) => setParam('track', e.target.value)}>
+          <option value="">All modules</option>
           {TRACKS.map((t) => (
             <option key={t.id} value={t.id}>
               {t.name}
@@ -197,20 +197,20 @@ export function LearnPage({ route }: { route: Route }) {
             </option>
           ))}
         </select>
-        <select aria-label="Filter by difficulty" value={difficulty ?? ''} onChange={(e) => setDifficulty(e.target.value ? Number(e.target.value) : null)}>
-          <option value="">Any rarity</option>
-          <option value="1">Common · 1</option>
-          <option value="2">Uncommon · 2</option>
-          <option value="3">Rare · 3</option>
-          <option value="4">Legendary · 4</option>
-          <option value="5">Ultimate · 5</option>
+        <select aria-label="Filter by complexity" value={difficulty ?? ''} onChange={(e) => setDifficulty(e.target.value ? Number(e.target.value) : null)}>
+          <option value="">Any complexity</option>
+          <option value="1">O(1) · constant</option>
+          <option value="2">O(log n) · logarithmic</option>
+          <option value="3">O(n) · linear</option>
+          <option value="4">O(n²) · quadratic</option>
+          <option value="5">O(2ⁿ) · exponential</option>
         </select>
         <select aria-label="Filter by status" value={status} onChange={(e) => setStatus(e.target.value as CardStatus | '')}>
           <option value="">Any status</option>
-          <option value="new">New</option>
-          <option value="learning">Learning</option>
-          <option value="reviewing">Reviewing</option>
-          <option value="mastered">Mastered</option>
+          <option value="new">Untracked</option>
+          <option value="learning">Committed</option>
+          <option value="reviewing">In review</option>
+          <option value="mastered">Merged</option>
         </select>
         <label className="toggle">
           <input type="checkbox" checked={includeLocked} onChange={(e) => setIncludeLocked(e.target.checked)} />

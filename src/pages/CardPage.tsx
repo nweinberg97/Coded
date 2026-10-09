@@ -13,7 +13,7 @@ export function CardPage({ id }: { id: string }) {
   if (!c) {
     return (
       <div className="page">
-        <EmptyState icon="search" title="Card not found" action={<Link className="btn btn-primary" to="/vault">Back to the Vault</Link>} />
+        <EmptyState icon="search" title="Card not found" action={<Link className="btn btn-primary" to="/repo">Back to your repo</Link>} />
       </div>
     );
   }
@@ -31,7 +31,7 @@ export function CardPage({ id }: { id: string }) {
     <div className="page card-page" style={{ ['--set-a' as string]: track.cover[0], ['--set-b' as string]: track.cover[1] }}>
       <div className="card-page-glow" aria-hidden />
       <nav className="crumbs" aria-label="Breadcrumb">
-        <Link to="/vault">Vault</Link> <span>/</span> <Link to={`/set/${track.id}`}>{track.name}</Link> <span>/</span>{' '}
+        <Link to="/repo">Repo</Link> <span>/</span> <Link to={`/module/${track.id}`}>{track.name}</Link> <span>/</span>{' '}
         <span aria-current="page">{splitTerm(c.term).title}</span>
       </nav>
       <div className="card-page-grid">
@@ -42,7 +42,7 @@ export function CardPage({ id }: { id: string }) {
             <span className="muted">{describeDue(r, Date.now())}</span>
           </div>
           <Link className="btn btn-primary btn-block" to={`/learn?card=${c.id}`} data-testid="study-this">
-            <Icon name="play" size={16} /> {learned ? 'Review this card' : locked ? 'Preview this card' : 'Collect this card'}
+            <Icon name="play" size={16} /> {learned ? 'Review this card' : locked ? 'Preview this card' : 'Commit this card'}
           </Link>
           <div className="card-page-pager">
             {i > 0 ? <Link className="btn btn-ghost btn-sm" to={`/card/${siblings[i - 1].id}`}><Icon name="left" size={16} /> {splitTerm(siblings[i - 1].term).title}</Link> : <span />}
@@ -55,7 +55,7 @@ export function CardPage({ id }: { id: string }) {
               <Icon name="lock" size={18} />
               <div>
                 <strong>Unlocks at Level {p.conceptUnlockLevel(c.id)}.</strong>
-                <span> Reading is always free. Collecting it (and earning XP) opens when you reach that level — see <Link to="/me">what’s next</Link>.</span>
+                <span> Reading is always free. Committing it (and earning XP) opens when you reach that level — see <Link to="/me">what’s next</Link>.</span>
               </div>
             </div>
           )}

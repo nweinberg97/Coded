@@ -58,11 +58,11 @@ export function ProfilePage() {
           </div>
           <div className="wrapped-tile wt-b">
             <div className="wt-big">{collected}</div>
-            <div className="wt-small">cards collected of {CONCEPTS.length}</div>
+            <div className="wt-small">cards committed of {CONCEPTS.length}</div>
           </div>
           <div className="wrapped-tile wt-c">
             <div className="wt-big">{mastered}</div>
-            <div className="wt-small">mastered</div>
+            <div className="wt-small">merged to main</div>
           </div>
           <div className="wrapped-tile wt-d">
             <div className="wt-big">{attempts ? Math.round((correct / attempts) * 100) : 0}%</div>
@@ -78,7 +78,7 @@ export function ProfilePage() {
           </div>
           {bestTrack && bestTrack.n > 0 && (
             <div className="wrapped-tile wt-g">
-              <div className="wt-small">Top set</div>
+              <div className="wt-small">Top module</div>
               <div className="wt-mid">{bestTrack.t.name}</div>
             </div>
           )}
@@ -183,7 +183,7 @@ export function ProfilePage() {
 
       {confirmReset && (
         <Modal title="Reset all progress?" onClose={() => setConfirmReset(false)}>
-          <p>This permanently erases your XP, collected cards, review schedule and saved code in this browser. Consider exporting a backup first.</p>
+          <p>This permanently erases your XP, committed cards, review schedule and saved code in this browser. Consider exporting a backup first.</p>
           <label className="field">
             <span>Type <strong>RESET</strong> to confirm</span>
             <input value={resetText} onChange={(e) => setResetText(e.target.value)} autoComplete="off" />

@@ -113,7 +113,7 @@ function DemoTour() {
             <StudyCard concept={CONCEPT_BY_ID['api']} sessionId="demo" autoFocus={false} linkTo={false} />
           </DemoSection>
 
-          <DemoSection n={2} title="Shuffle the deck" lead="170 cards across 8 sets. Filter by set and shuffle — real randomization that avoids repeats.">
+          <DemoSection n={2} title="Shuffle the deck" lead="170 cards across 8 modules. Filter by module and shuffle — real randomization that avoids repeats.">
             <ShuffleDemo onShuffle={() => setShuffled(true)} />
           </DemoSection>
 
@@ -155,7 +155,7 @@ function DemoTour() {
             </div>
           </DemoSection>
 
-          <DemoSection n={8} title="Explore the curriculum" lead="Browse the real library: eight sets, seven levels, eight drops.">
+          <DemoSection n={8} title="Explore the curriculum" lead="Browse the real library: eight modules, seven releases, eight drops.">
             <CurriculumDemo onExplore={() => setExplored(true)} />
           </DemoSection>
 
@@ -219,8 +219,8 @@ function ShuffleDemo({ onShuffle }: { onShuffle: () => void }) {
   const card = deck[Math.min(i, deck.length - 1)];
   return (
     <div className="shuffle-demo">
-      <div className="chip-row" role="group" aria-label="Filter by set">
-        <button className={`chip${track === '' ? ' chip-on' : ''}`} onClick={() => { setTrack(''); setI(0); }}>All sets</button>
+      <div className="chip-row" role="group" aria-label="Filter by module">
+        <button className={`chip${track === '' ? ' chip-on' : ''}`} onClick={() => { setTrack(''); setI(0); }}>All modules</button>
         {TRACKS.map((t) => (
           <button key={t.id} className={`chip${track === t.id ? ' chip-on' : ''}`} onClick={() => { setTrack(t.id); setI(0); }}>
             {t.name}

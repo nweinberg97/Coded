@@ -1,10 +1,10 @@
-import { CONCEPTS, rarityOf, serialOf, splitTerm, TRACK_BY_ID } from '../content';
+import { CONCEPTS, hexId, rarityOf, serialOf, splitTerm, TRACK_BY_ID } from '../content';
 import type { Concept } from '../content/types';
 import type { CardStatus } from '../engine/srs';
 import { Icon } from './Icon';
 import { DifficultyPips } from './ui';
 
-// A concept rendered as a collectible "moment" card.
+// A concept rendered as a numbered card with a Big-O complexity tier.
 export function CardFace({
   concept, status, locked, compact, showQuestion,
 }: { concept: Concept; status?: CardStatus; locked?: boolean; compact?: boolean; showQuestion?: boolean }) {
@@ -28,7 +28,7 @@ export function CardFace({
       <div className="cardface-top">
         <span className="cardface-set">{track.name}</span>
         <span className="cardface-serial mono">
-          #{String(serialOf(concept.id)).padStart(3, '0')}/{CONCEPTS.length}
+          {hexId(serialOf(concept.id))}/{hexId(CONCEPTS.length)}
         </span>
       </div>
       <div className="cardface-body">
@@ -39,7 +39,7 @@ export function CardFace({
         {showQuestion && <p className="cardface-question">{concept.question}</p>}
       </div>
       <div className="cardface-bottom">
-        <span className="cardface-rarity">{rarity.label}</span>
+        <span className="cardface-rarity" title={`${rarity.name} complexity — ${rarity.blurb}`}>{rarity.label}</span>
         <DifficultyPips difficulty={concept.difficulty} />
       </div>
       {locked && (
@@ -48,7 +48,7 @@ export function CardFace({
         </div>
       )}
       {collected && !locked && (
-        <div className="cardface-stamp" aria-label={status === 'mastered' ? 'Mastered' : 'Collected'}>
+        <div className="cardface-stamp" aria-label={status === 'mastered' ? 'Merged' : 'Committed'}>
           {status === 'mastered' ? '★' : <Icon name="check" size={14} />}
         </div>
       )}

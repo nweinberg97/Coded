@@ -224,7 +224,7 @@ function ShipResult({ challenge, ws }: { challenge: Challenge; ws: WS }) {
           <div className="ship-stamp">SHIPPED</div>
           <div>
             <strong>All {results.length} checks passed.</strong>{' '}
-            {xp > 0 ? <span className="xp-pop">+{xp} XP</span> : eligible ? <span className="muted">XP already collected for this drop.</span> : <span className="muted">Practice run — XP unlocks at Level {challenge.unlockLevel}.</span>}
+            {xp > 0 ? <span className="xp-pop">+{xp} XP</span> : eligible ? <span className="muted">XP already earned for this drop.</span> : <span className="muted">Practice run — XP unlocks at Level {challenge.unlockLevel}.</span>}
             <p className="muted">Open “Under the hood” to see exactly what your code did.</p>
           </div>
         </>

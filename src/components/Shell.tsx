@@ -10,7 +10,7 @@ import { LevelBadge, ProgressBar } from './ui';
 const NAV = [
   { to: '/', label: 'Home', icon: 'home', match: (p: string) => p === '/' },
   { to: '/learn', label: 'Learn', icon: 'cards', match: (p: string) => p.startsWith('/learn') },
-  { to: '/vault', label: 'Vault', icon: 'vault', match: (p: string) => p.startsWith('/vault') || p.startsWith('/card') || p.startsWith('/set') },
+  { to: '/repo', label: 'Repo', icon: 'vault', match: (p: string) => /^\/(repo|vault|card|module|set)/.test(p) },
   { to: '/build', label: 'Build', icon: 'code', match: (p: string) => p.startsWith('/build') },
   { to: '/demo', label: 'Demo', icon: 'play', match: (p: string) => p.startsWith('/demo') },
   { to: '/me', label: 'You', icon: 'user', match: (p: string) => p.startsWith('/me') },

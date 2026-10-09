@@ -40,7 +40,7 @@ export function HomePage() {
             software <span className="accent-word">actually</span> works.
           </h1>
           <p className="lede">
-            Collect 170 concept cards, earn XP for real understanding, and ship working code in a live sandbox. No account, no setup — your progress stays in this browser.
+            Commit 170 concept cards to memory, earn XP for real understanding, and ship working code in a live sandbox. No account, no setup — your progress stays in this browser.
           </p>
           <div className="hero-ctas">
             <button className="btn btn-primary btn-lg" onClick={() => navigate('/learn')} data-testid="continue">
@@ -73,7 +73,7 @@ export function HomePage() {
           </Link>
           <div className="stat-card">
             <div className="stat-n">{collected}</div>
-            <div className="stat-k">cards collected</div>
+            <div className="stat-k">cards committed</div>
           </div>
           <div className="stat-card">
             <div className="stat-n">{due}</div>
@@ -145,8 +145,8 @@ export function HomePage() {
 
       <section>
         <div className="section-head">
-          <h2 className="h-section">Your sets</h2>
-          <Link to="/vault" className="see-all">See all</Link>
+          <h2 className="h-section">Your modules</h2>
+          <Link to="/repo" className="see-all">See all</Link>
         </div>
         <div className="shelf">
           {TRACKS.map((t) => {
@@ -154,7 +154,7 @@ export function HomePage() {
             const got = all.filter((c) => p.learned(c.id)).length;
             const locked = t.unlockLevel > p.level;
             return (
-              <Link key={t.id} to={`/set/${t.id}`} className="shelf-item">
+              <Link key={t.id} to={`/module/${t.id}`} className="shelf-item">
                 <div className="shelf-cover">
                   <TrackCover track={t} size={168} />
                   {locked ? (
@@ -175,8 +175,8 @@ export function HomePage() {
       {p.state.recent.length > 0 && (
         <section>
           <div className="section-head">
-            <h2 className="h-section">Recently collected</h2>
-            <Link to="/vault" className="see-all">Vault</Link>
+            <h2 className="h-section">Recent commits</h2>
+            <Link to="/repo" className="see-all">Repo</Link>
           </div>
           <div className="recent-row">
             {p.state.recent.slice(0, 6).map((id) => (

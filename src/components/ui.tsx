@@ -31,7 +31,7 @@ export function LevelBadge({ level, size = 'md' }: { level: number; size?: 'sm' 
 export function RarityTag({ difficulty }: { difficulty: number }) {
   const r = rarityOf(difficulty);
   return (
-    <span className="rarity-tag" style={{ ['--rarity' as string]: r.color }}>
+    <span className="rarity-tag" style={{ ['--rarity' as string]: r.color }} title={`${r.name} complexity — ${r.blurb}`}>
       <span className="rarity-dot" />
       {r.label}
     </span>
@@ -49,10 +49,10 @@ export function DifficultyPips({ difficulty }: { difficulty: number }) {
 }
 
 const STATUS_LABEL: Record<CardStatus, string> = {
-  new: 'New',
-  learning: 'Learning',
-  reviewing: 'Reviewing',
-  mastered: 'Mastered',
+  new: 'Untracked',
+  learning: 'Committed',
+  reviewing: 'In review',
+  mastered: 'Merged',
 };
 
 export function StatusTag({ status }: { status: CardStatus }) {

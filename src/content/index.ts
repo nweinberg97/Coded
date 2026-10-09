@@ -34,7 +34,7 @@ export function conceptsInTrack(trackId: TrackId): Concept[] {
   return BY_TRACK[trackId];
 }
 
-/** Serial number like a collectible: position within the whole library. */
+/** Position within the whole library (shown as a hex address). */
 export function serialOf(id: string): number {
   return CONCEPTS.findIndex((c) => c.id === id) + 1;
 }
@@ -46,15 +46,24 @@ export function splitTerm(term: string): { title: string; subtitle?: string } {
   return { title: m[1], subtitle: m[2] };
 }
 
+/**
+ * Difficulty tiers, named in Big-O notation — how engineers describe how fast
+ * work grows as a problem gets bigger. O(1) is effortless; O(2ⁿ) explodes.
+ */
 export const RARITY = [
-  { id: 'common', label: 'Common', color: '#B8B8BE' },
-  { id: 'uncommon', label: 'Uncommon', color: '#2BD97C' },
-  { id: 'rare', label: 'Rare', color: '#3D8BFF' },
-  { id: 'legendary', label: 'Legendary', color: '#FFB800' },
-  { id: 'ultimate', label: 'Ultimate', color: '#B57BFF' },
+  { id: 'common', label: 'O(1)', name: 'Constant', blurb: 'Everyday idea — instant to grasp', color: '#B8B8BE' },
+  { id: 'uncommon', label: 'O(log n)', name: 'Logarithmic', blurb: 'Quick to learn once you see it', color: '#2BD97C' },
+  { id: 'rare', label: 'O(n)', name: 'Linear', blurb: 'Takes real attention to work through', color: '#3D8BFF' },
+  { id: 'legendary', label: 'O(n²)', name: 'Quadratic', blurb: 'Hard — ideas that build on other ideas', color: '#FFB800' },
+  { id: 'ultimate', label: 'O(2ⁿ)', name: 'Exponential', blurb: 'Deep cut — senior-engineer territory', color: '#B57BFF' },
 ] as const;
 
-/** Difficulty 1–5 maps to a collectible rarity tier. */
+/** Card id as a hex address, e.g. 14 → "0x00E". */
+export function hexId(n: number): string {
+  return '0x' + n.toString(16).toUpperCase().padStart(3, '0');
+}
+
+/** Difficulty 1–5 maps to a complexity tier. */
 export function rarityOf(difficulty: number) {
   return RARITY[Math.min(5, Math.max(1, difficulty)) - 1];
 }

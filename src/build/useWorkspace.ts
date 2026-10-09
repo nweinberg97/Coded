@@ -32,6 +32,7 @@ export function useWorkspace(challenge: Challenge) {
   const preview = useRef<SandboxFrame | null>(null);
   const checker = useRef<SandboxFrame | null>(null);
   const lineN = useRef(0);
+  const hasRun = useRef(false);
   const pRef = useRef(p);
   pRef.current = p;
 
@@ -75,6 +76,7 @@ export function useWorkspace(challenge: Challenge) {
   const run = useCallback(
     async (src?: string) => {
       const source = src ?? code;
+      hasRun.current = true;
       setErrorLine(null);
       setConsole([]);
       setTrace([]);
@@ -127,7 +129,9 @@ export function useWorkspace(challenge: Challenge) {
 
   // Run once on mount so the preview isn't empty.
   useEffect(() => {
-    const t = setTimeout(() => run(), 60);
+    const t = setTimeout(() => {
+      if (!hasRun.current) run();
+    }, 60);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -148,7 +152,9 @@ export function useWorkspace(challenge: Challenge) {
     const checks = challenge.checks;
     const results: CheckOutcome[] = [];
     setShip({ phase: 'checking', done: 0, total: checks.length });
-    await run(source); // the visible preview reflects exactly what is being shipped
+    // Refresh the visible preview with exactly what is being shipped (don't block on it —
+    // the checks run in their own hidden sandbox).
+    void run(source);
 
     if (challenge.mode === 'sql') {
       const r = runSql(source);

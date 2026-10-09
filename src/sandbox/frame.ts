@@ -23,10 +23,19 @@ export class StuckError extends Error {
   }
 }
 
+/** Thrown when a newer run replaced this one before it finished loading. */
+export class SupersededError extends Error {
+  constructor() {
+    super('Superseded by a newer run');
+    this.name = 'SupersededError';
+  }
+}
+
 export class SandboxFrame {
   private iframe: HTMLIFrameElement | null = null;
   private runId = '';
   private readyResolve: ((s: PageSummary) => void) | null = null;
+  private readyReject: ((e: Error) => void) | null = null;
   private pendingChecks = new Map<string, (r: CheckResultMsg) => void>();
   private onMessage = (ev: MessageEvent) => this.handle(ev);
 
@@ -61,6 +70,7 @@ export class SandboxFrame {
       case 'ready':
         this.readyResolve?.(msg.payload);
         this.readyResolve = null;
+        this.readyReject = null;
         break;
       case 'check-result': {
         const r = this.pendingChecks.get(msg.payload.checkId);
@@ -75,7 +85,11 @@ export class SandboxFrame {
 
   /** Destroy the current frame (this also halts any code running in it). */
   stop() {
+    // A load that is still waiting must never hang forever: reject it.
+    this.readyReject?.(new SupersededError());
+    this.readyReject = null;
     this.readyResolve = null;
+    for (const r of this.pendingChecks.values()) r({ checkId: '', ok: false, detail: 'The preview was restarted.' });
     this.pendingChecks.clear();
     this.runId = '';
     if (this.iframe) {
@@ -98,9 +112,11 @@ export class SandboxFrame {
     const runId = this.runId;
     const p = new Promise<PageSummary>((resolve, reject) => {
       this.readyResolve = resolve;
+      this.readyReject = reject;
       setTimeout(() => {
         if (this.runId === runId && this.readyResolve === resolve) {
           this.readyResolve = null;
+          this.readyReject = null;
           reject(new StuckError('The preview didn’t finish loading within 5 seconds. Your code may be stuck in an endless loop.'));
         }
       }, READY_TIMEOUT_MS);

@@ -1,0 +1,23 @@
+{
+  "name": "Coded — learn how software works",
+  "short_name": "Coded",
+  "description": "Collect concept cards, earn XP, and ship real code in a browser sandbox. Free, no account, works offline.",
+  "id": "./",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b0b0c",
+  "theme_color": "#0b0b0c",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Learn", "url": "./#/learn", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Build", "url": "./#/build", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

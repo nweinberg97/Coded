@@ -4,6 +4,7 @@ import { useProgress } from '../app/store';
 import { levelDef, nextLevelDef, xpProgress } from '../engine/levels';
 import { streak } from '../engine/progress';
 import { Icon } from './Icon';
+import { useInstallPrompt } from '../app/pwa';
 import { LevelBadge, ProgressBar } from './ui';
 
 const NAV = [
@@ -34,6 +35,7 @@ export function Shell({ path, children }: { path: string; children: ReactNode })
   const next = nextLevelDef(p.level);
   const cur = levelDef(p.level);
   const days = streak(p.state);
+  const install = useInstallPrompt();
   return (
     <div className="shell">
       <a className="skip-link" href="#main">
@@ -51,6 +53,11 @@ export function Shell({ path, children }: { path: string; children: ReactNode })
             </Link>
           ))}
         </nav>
+        {install && (
+          <button className="btn btn-ghost btn-sm install-btn" onClick={install}>
+            <Icon name="download" size={16} /> Install app
+          </button>
+        )}
         <Link to="/me" className="sidebar-level">
           <div className="sidebar-level-row">
             <LevelBadge level={p.level} size="sm" />
@@ -69,6 +76,11 @@ export function Shell({ path, children }: { path: string; children: ReactNode })
           <Logo small />
         </Link>
         <div className="topbar-stats">
+          {install && (
+            <button className="icon-btn" onClick={install} aria-label="Install app">
+              <Icon name="download" size={18} />
+            </button>
+          )}
           {days > 0 && (
             <span className="stat-pill" title={`${days}-day streak`}>
               <Icon name="flame" size={16} /> {days}

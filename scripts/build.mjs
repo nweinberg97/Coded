@@ -40,7 +40,7 @@ const options = {
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.svg': 'image/svg+xml', '.woff': 'font/woff', '.woff2': 'font/woff2', '.json': 'application/json', '.map': 'application/json',
-  '.txt': 'text/plain; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8', '.png': 'image/png', '.webmanifest': 'application/manifest+json',
 };
 
 function staticServer(dir, port) {
@@ -76,5 +76,11 @@ if (preview) {
   const out = Object.entries(result.metafile.outputs)
     .filter(([f]) => !f.endsWith('.map'))
     .map(([f, o]) => `  ${f.replace(root + '/', '')}  ${(o.bytes / 1024).toFixed(1)} kB`);
+  // Stamp the service worker with a content hash so each deploy refreshes the offline cache.
+  const { createHash } = await import('node:crypto');
+  const hash = createHash('sha256');
+  for (const f of ['assets/app.js', 'assets/app.css', 'index.html']) hash.update(readFileSync(join(dist, f)));
+  const swPath = join(dist, 'sw.js');
+  writeFileSync(swPath, readFileSync(swPath, 'utf8').replaceAll('__BUILD_ID__', hash.digest('hex').slice(0, 12)));
   console.log('\nBuilt:\n' + out.join('\n'));
 }

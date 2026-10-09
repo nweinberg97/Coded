@@ -200,6 +200,8 @@ a.chip:hover, button.chip:hover { border-color: var(--text-2); }
 .nav-item:hover { color: var(--text); }
 .nav-item.is-active { color: var(--text); background: var(--surface-2); }
 .nav-item.is-active .icon { color: var(--accent); }
+.install-btn { margin-top: auto; }
+.install-btn + .sidebar-level { margin-top: 0; }
 .sidebar-level { margin-top: auto; padding: var(--s4); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); display: grid; gap: var(--s3); }
 .sidebar-level:hover { border-color: var(--line-2); }
 .sidebar-level-row { display: flex; align-items: center; gap: var(--s3); }

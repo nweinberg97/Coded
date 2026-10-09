@@ -17,7 +17,7 @@ const shots = join(root, 'test-results');
 mkdirSync(shots, { recursive: true });
 if (!existsSync(join(dist, 'index.html'))) throw new Error('Run `npm run build` first.');
 
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff': 'font/woff', '.svg': 'image/svg+xml' };
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff': 'font/woff', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const server = createServer((req, res) => {
   let f = normalize(join(dist, decodeURIComponent(req.url.split('?')[0])));
   if (!f.startsWith(dist) || !existsSync(f) || statSync(f).isDirectory()) f = join(dist, 'index.html');
@@ -324,6 +324,68 @@ await step('keyboard: answer with Enter, advance with Enter, shuffle with S', as
   await page.waitForTimeout(150);
   expect((await page.locator('.study-term').innerText()) !== before, 'S shuffles');
 });
+
+console.log('\nHosted like GitHub Pages (/Coded/ subpath) + installable + offline');
+// Serve dist ONLY under /Coded/ — exactly how https://nweinberg97.github.io/Coded/ works.
+const sub = createServer((req, res) => {
+  const url = decodeURIComponent(req.url.split('?')[0]);
+  if (!url.startsWith('/Coded/')) {
+    res.writeHead(404).end('not found');
+    return;
+  }
+  let f = normalize(join(dist, url.slice('/Coded/'.length) || 'index.html'));
+  if (!f.startsWith(dist) || !existsSync(f) || statSync(f).isDirectory()) f = join(dist, 'index.html');
+  res.writeHead(200, { 'Content-Type': MIME[extname(f)] ?? 'application/octet-stream' });
+  res.end(readFileSync(f));
+}).listen(0);
+const subBase = `http://localhost:${sub.address().port}/Coded/`;
+const pwaCtx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+const pw = await pwaCtx.newPage();
+const failedRequests = [];
+pw.on('response', (r) => { if (r.status() >= 400) failedRequests.push(`${r.status()} ${r.url()}`); });
+
+await step('loads from a subpath with every asset resolving (no 404s)', async () => {
+  await pw.goto(subBase);
+  await pw.locator('[data-testid="continue"]').waitFor();
+  const fontOk = await pw.evaluate(async () => { await document.fonts.ready; return document.fonts.check('900 20px InterDisplay'); });
+  expect(fontOk, 'bundled fonts load');
+  await pw.goto(`${subBase}#/build/first-webpage`);
+  await pw.frameLocator('[data-testid="preview-host"] iframe').locator('h1').waitFor();
+  expect(failedRequests.length === 0, failedRequests.join('\n'));
+});
+
+await step('is an installable web app (manifest + icons + service worker)', async () => {
+  const manifest = await pw.evaluate(async () => {
+    const href = document.querySelector('link[rel="manifest"]').href;
+    const m = await (await fetch(href)).json();
+    const icons = await Promise.all(m.icons.map(async (i) => (await fetch(new URL(i.src, href))).ok));
+    return { m, icons };
+  });
+  expect(manifest.m.display === 'standalone' && manifest.m.name.startsWith('Coded'), 'manifest');
+  expect(manifest.icons.every(Boolean), 'all icons resolve');
+  const sw = await pw.evaluate(async () => {
+    const reg = await navigator.serviceWorker.ready;
+    return reg.active?.scriptURL ?? '';
+  });
+  expect(sw.endsWith('/Coded/sw.js'), `service worker active: ${sw}`);
+});
+
+await step('keeps working with no internet connection', async () => {
+  await pw.goto(`${subBase}#/learn`);
+  await pw.locator('[data-testid="answer-input"]').waitFor();
+  await pw.waitForTimeout(500);
+  await pwaCtx.setOffline(true);
+  await pw.reload();
+  await pw.locator('[data-testid="answer-input"]').waitFor({ timeout: 8000 });
+  await pw.locator('[data-testid="answer-input"]').fill('a global network of networks connecting computers');
+  await pw.locator('[data-testid="submit-answer"]').click();
+  await pw.locator('.result-banner').waitFor();
+  await pw.goto(`${subBase}#/build/button-counter`);
+  await pw.frameLocator('[data-testid="preview-host"] iframe').locator('#counter').waitFor({ timeout: 8000 });
+  await pwaCtx.setOffline(false);
+});
+await pwaCtx.close();
+sub.close();
 
 await step('no uncaught page errors', async () => {
   // errors thrown on purpose by learner code inside the sandbox are excluded

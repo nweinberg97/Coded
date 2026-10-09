@@ -156,7 +156,8 @@ a.chip:hover, button.chip:hover { border-color: var(--text-2); }
 .stat-pill .icon { color: var(--accent); }
 .xp-chip { margin-left: auto; font: 800 12px/1 var(--mono); color: var(--accent); background: var(--accent-soft); padding: 6px 10px; border-radius: var(--r-pill); }
 .due-chip { margin-left: auto; font: 600 11px/1 var(--mono); color: var(--text-3); }
-.rarity-tag { display: inline-flex; align-items: center; gap: 6px; font: 700 12px/1 var(--mono); color: var(--rarity); }
+.rarity-tag { display: inline-flex; align-items: center; gap: 6px; font: 700 11px/1 var(--font); letter-spacing: 0.1em; text-transform: uppercase; color: var(--rarity); }
+.tier-side { font: 500 10.5px/1 var(--mono); letter-spacing: 0; text-transform: none; color: var(--text-3); }
 .rarity-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rarity); box-shadow: 0 0 8px var(--rarity); }
 .pips { display: inline-flex; gap: 3px; }
 .pip { width: 6px; height: 6px; border-radius: 2px; background: rgba(255,255,255,0.16); }
@@ -333,7 +334,7 @@ a:hover > .cardface .cardface-sheen, .card-grid-item:hover .cardface-sheen { opa
 .cardface-subtitle { font-size: 12px; color: var(--text-2); font-weight: 500; }
 .cardface-question { font-size: 13px; color: var(--text-2); margin: var(--s2) 0 0; line-height: 1.4; }
 .cardface-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--line); }
-.cardface-rarity { font: 800 12px/1 var(--mono); letter-spacing: 0; color: var(--rarity); }
+.cardface-rarity { display: grid; gap: 3px; font: 800 11px/1 var(--font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--rarity); }
 .cardface-lock { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(0, 0, 0, 0.7); color: var(--text-2); z-index: 2; }
 .cardface.is-locked .cardface-body { filter: blur(1.5px); opacity: 0.45; }
 .cardface-stamp { position: absolute; right: 12px; top: 30px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--success); color: #002b13; font-weight: 900; font-size: 13px; z-index: 2; }
@@ -371,7 +372,7 @@ a:hover > .cardface .cardface-sheen, .card-grid-item:hover .cardface-sheen { opa
 .study-subtitle { font-size: 14px; color: var(--text-2); font-weight: 500; }
 .study-question { font-size: clamp(18px, 2.2vw, 22px); line-height: 1.35; font-weight: 600; margin: var(--s3) 0 0; max-width: 34ch; }
 .study-bottom { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; padding-top: var(--s4); border-top: 1px solid var(--line); }
-.study-rarity { font: 800 13px/1 var(--mono); letter-spacing: 0; color: var(--rarity); }
+.study-rarity { display: inline-flex; align-items: baseline; gap: 8px; font: 800 12px/1 var(--font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--rarity); }
 .study-back { display: grid; gap: var(--s3); animation: fade 0.3s; }
 .result-banner { display: flex; align-items: center; gap: var(--s2); font-weight: 800; font-size: 14px; padding: var(--s3) var(--s4); border-radius: var(--r-pill); width: fit-content; max-width: 100%; flex-wrap: wrap; }
 .result-correct, .result-assisted { background: var(--success-soft); color: var(--success); }
@@ -484,7 +485,8 @@ a:hover > .cardface .cardface-sheen, .card-grid-item:hover .cardface-sheen { opa
 .complexity-legend .h-mini { margin-top: 0; }
 .complexity-legend ul { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s2); }
 .complexity-legend li { display: grid; gap: 2px; padding: var(--s3) var(--s4); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); border-top: 2px solid var(--rarity); }
-.bigo { font: 800 18px/1.1 var(--mono); color: var(--rarity); }
+.bigo { font: 900 18px/1.1 var(--display); text-transform: uppercase; letter-spacing: -0.01em; color: var(--rarity); }
+.bigo-code { font: 600 11px/1 var(--mono); color: var(--text-3); margin-left: 4px; }
 .bigo-name { font-weight: 800; font-size: 13px; }
 .bigo-blurb { font-size: 12px; color: var(--text-2); line-height: 1.35; }
 .bigo-note { font-size: 13px; margin: var(--s3) 0 0; }
@@ -541,7 +543,7 @@ a:hover > .cardface .cardface-sheen, .card-grid-item:hover .cardface-sheen { opa
 .tl-title { display: grid; min-width: 0; }
 .tl-title strong { font-size: 15px; }
 .tl-title span { font-size: 13px; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.tl-rarity { font: 800 13px/1 var(--mono); }
+.tl-rarity { display: grid; gap: 3px; font: 800 12px/1 var(--font); letter-spacing: 0.08em; text-transform: uppercase; }
 .tl-due { font-size: 12px; color: var(--text-3); }
 @media (max-width: 760px) {
   .set-hero { flex-direction: column; align-items: flex-start; padding: var(--s5) var(--s4); margin: calc(var(--s5) * -1) calc(var(--s4) * -1) 0; }

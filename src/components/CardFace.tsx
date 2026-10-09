@@ -1,4 +1,4 @@
-import { CONCEPTS, hexId, rarityOf, serialOf, splitTerm, TRACK_BY_ID } from '../content';
+import { CONCEPTS, hexId, rarityOf, serialOf, splitTerm, tierDescription, TRACK_BY_ID } from '../content';
 import type { Concept } from '../content/types';
 import type { CardStatus } from '../engine/srs';
 import { Icon } from './Icon';
@@ -39,7 +39,10 @@ export function CardFace({
         {showQuestion && <p className="cardface-question">{concept.question}</p>}
       </div>
       <div className="cardface-bottom">
-        <span className="cardface-rarity" title={`${rarity.name} complexity — ${rarity.blurb}`}>{rarity.label}</span>
+        <span className="cardface-rarity" title={tierDescription(rarity)}>
+          {rarity.label}
+          <span className="tier-side">{rarity.name}</span>
+        </span>
         <DifficultyPips difficulty={concept.difficulty} />
       </div>
       {locked && (

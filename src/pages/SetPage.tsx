@@ -46,7 +46,7 @@ export function SetPage({ id }: { id: string }) {
         <li className="tracklist-head" aria-hidden>
           <span>#</span>
           <span>Card</span>
-          <span className="hide-sm">Complexity</span>
+          <span className="hide-sm">Difficulty</span>
           <span className="hide-sm">Status</span>
           <span className="hide-sm">Review</span>
         </li>
@@ -62,7 +62,7 @@ export function SetPage({ id }: { id: string }) {
                   <strong>{title}</strong>
                   <span>{subtitle ?? c.definition.slice(0, 70) + (c.definition.length > 70 ? '…' : '')}</span>
                 </span>
-                <span className="tl-rarity hide-sm" style={{ color: rar.color }}>{rar.label}</span>
+                <span className="tl-rarity hide-sm" style={{ color: rar.color }}>{rar.label}<span className="tier-side">{rar.name}</span></span>
                 <span className="hide-sm"><StatusTag status={statusOf(r)} /></span>
                 <span className="tl-due hide-sm mono">{describeDue(r, now)}</span>
               </Link>

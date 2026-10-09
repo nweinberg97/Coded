@@ -51,18 +51,18 @@ export function VaultPage() {
       </header>
 
       <section className="complexity-legend" aria-labelledby="bigo-h">
-        <h2 id="bigo-h" className="h-mini">Complexity tiers · how engineers say “how hard”</h2>
+        <h2 id="bigo-h" className="h-mini">Difficulty · with the engineer’s name for it</h2>
         <ul>
           {RARITY.map((r) => (
             <li key={r.id} style={{ ['--rarity' as string]: r.color }}>
               <span className="bigo">{r.label}</span>
-              <span className="bigo-name">{r.name}</span>
+              <span className="bigo-name">{r.name} <span className="bigo-code">{r.bigO}</span></span>
               <span className="bigo-blurb">{r.blurb}</span>
             </li>
           ))}
         </ul>
         <p className="muted bigo-note">
-          Big-O notation describes how much work grows as a problem gets bigger. Status follows Git: <strong>Untracked</strong> → <strong>Committed</strong> (answered right) → <strong>In review</strong> → <strong>Merged</strong> (mastered through spaced reviews).
+          The side names come from Big-O notation — how engineers describe how much work grows as a problem gets bigger. Status follows Git: <strong>Untracked</strong> → <strong>Committed</strong> (answered right) → <strong>In review</strong> → <strong>Merged</strong> (mastered through spaced reviews).
         </p>
       </section>
 
@@ -112,8 +112,8 @@ export function VaultPage() {
                 </option>
               ))}
             </select>
-            <select aria-label="Complexity" value={rarity ?? ''} onChange={(e) => setRarity(e.target.value ? Number(e.target.value) : null)}>
-              <option value="">Any complexity</option>
+            <select aria-label="Difficulty" value={rarity ?? ''} onChange={(e) => setRarity(e.target.value ? Number(e.target.value) : null)}>
+              <option value="">Any difficulty</option>
               {RARITY.map((r, i) => (
                 <option key={r.id} value={i + 1}>
                   {r.label} · {r.name.toLowerCase()}

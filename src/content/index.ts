@@ -47,16 +47,22 @@ export function splitTerm(term: string): { title: string; subtitle?: string } {
 }
 
 /**
- * Difficulty tiers, named in Big-O notation — how engineers describe how fast
- * work grows as a problem gets bigger. O(1) is effortless; O(2ⁿ) explodes.
+ * Difficulty tiers. The plain-English label leads; the side name is the
+ * matching Big-O complexity class — how engineers describe how fast work grows
+ * as a problem gets bigger (O(1) is effortless, O(2ⁿ) explodes).
  */
 export const RARITY = [
-  { id: 'common', label: 'O(1)', name: 'Constant', blurb: 'Everyday idea — instant to grasp', color: '#B8B8BE' },
-  { id: 'uncommon', label: 'O(log n)', name: 'Logarithmic', blurb: 'Quick to learn once you see it', color: '#2BD97C' },
-  { id: 'rare', label: 'O(n)', name: 'Linear', blurb: 'Takes real attention to work through', color: '#3D8BFF' },
-  { id: 'legendary', label: 'O(n²)', name: 'Quadratic', blurb: 'Hard — ideas that build on other ideas', color: '#FFB800' },
-  { id: 'ultimate', label: 'O(2ⁿ)', name: 'Exponential', blurb: 'Deep cut — senior-engineer territory', color: '#B57BFF' },
+  { id: 'common', label: 'Easy', bigO: 'O(1)', name: 'Constant', blurb: 'Everyday idea — instant to grasp', color: '#B8B8BE' },
+  { id: 'uncommon', label: 'Medium', bigO: 'O(log n)', name: 'Logarithmic', blurb: 'Quick to learn once you see it', color: '#2BD97C' },
+  { id: 'rare', label: 'Hard', bigO: 'O(n)', name: 'Linear', blurb: 'Takes real attention to work through', color: '#3D8BFF' },
+  { id: 'legendary', label: 'Expert', bigO: 'O(n²)', name: 'Quadratic', blurb: 'Ideas that build on other ideas', color: '#FFB800' },
+  { id: 'ultimate', label: 'Super hard', bigO: 'O(2ⁿ)', name: 'Exponential', blurb: 'Deep cut — senior-engineer territory', color: '#B57BFF' },
 ] as const;
+
+/** "Expert · O(n²) quadratic" — for tooltips and screen readers. */
+export function tierDescription(r: (typeof RARITY)[number]): string {
+  return `${r.label} · ${r.bigO} ${r.name.toLowerCase()} complexity — ${r.blurb}`;
+}
 
 /** Card id as a hex address, e.g. 14 → "0x00E". */
 export function hexId(n: number): string {

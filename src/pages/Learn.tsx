@@ -197,13 +197,13 @@ export function LearnPage({ route }: { route: Route }) {
             </option>
           ))}
         </select>
-        <select aria-label="Filter by complexity" value={difficulty ?? ''} onChange={(e) => setDifficulty(e.target.value ? Number(e.target.value) : null)}>
-          <option value="">Any complexity</option>
-          <option value="1">O(1) · constant</option>
-          <option value="2">O(log n) · logarithmic</option>
-          <option value="3">O(n) · linear</option>
-          <option value="4">O(n²) · quadratic</option>
-          <option value="5">O(2ⁿ) · exponential</option>
+        <select aria-label="Filter by difficulty" value={difficulty ?? ''} onChange={(e) => setDifficulty(e.target.value ? Number(e.target.value) : null)}>
+          <option value="">Any difficulty</option>
+          <option value="1">Easy · constant</option>
+          <option value="2">Medium · logarithmic</option>
+          <option value="3">Hard · linear</option>
+          <option value="4">Expert · quadratic</option>
+          <option value="5">Super hard · exponential</option>
         </select>
         <select aria-label="Filter by status" value={status} onChange={(e) => setStatus(e.target.value as CardStatus | '')}>
           <option value="">Any status</option>

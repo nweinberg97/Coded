@@ -1,5 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react';
-import { rarityOf } from '../content';
+import { rarityOf, tierDescription } from '../content';
 import type { CardStatus } from '../engine/srs';
 import { Icon } from './Icon';
 
@@ -31,7 +31,7 @@ export function LevelBadge({ level, size = 'md' }: { level: number; size?: 'sm' 
 export function RarityTag({ difficulty }: { difficulty: number }) {
   const r = rarityOf(difficulty);
   return (
-    <span className="rarity-tag" style={{ ['--rarity' as string]: r.color }} title={`${r.name} complexity — ${r.blurb}`}>
+    <span className="rarity-tag" style={{ ['--rarity' as string]: r.color }} title={tierDescription(r)}>
       <span className="rarity-dot" />
       {r.label}
     </span>

@@ -6,7 +6,7 @@ Coded is a free, no-account learning app for smart people who aren't engineers. 
 
 The look borrows from card collecting (NBA Top Shot), shelves and play buttons (Spotify) and sneaker-release editorial (GOAT) — but the language is pure software:
 
-- **Difficulty tiers are Big-O complexity:** `O(1)` constant → `O(log n)` → `O(n)` → `O(n²)` → `O(2ⁿ)` exponential.
+- **Difficulty tiers:** Easy, Medium, Hard, Expert, Super hard — each with its Big-O name on the side (Constant, Logarithmic, Linear, Quadratic, Exponential).
 - **Card status follows Git:** Untracked → Committed (answered right) → In review → Merged (mastered through spaced review).
 - Your collection is your **Repo**, learning tracks are **Modules**, cards have hex addresses (`0x00E/0x0AA`), level-ups are **releases** (`v2.0.0`) with a changelog, and coding challenges are **Drops** you **ship**.
 
@@ -14,10 +14,10 @@ The look borrows from card collecting (NBA Top Shot), shelves and play buttons (
 
 | Area | What it does |
 | --- | --- |
-| **Learn** | Keyboard-first flashcards. Type an answer → offline evaluator grades correct / partial / incorrect and explains why. Hints, reveal, related cards, save-for-later. Modes: For you, Shuffle, Due, Missed, Saved. Filters: module, complexity, status, search. |
+| **Learn** | Keyboard-first flashcards. Type an answer → offline evaluator grades correct / partial / incorrect and explains why. Hints, reveal, related cards, save-for-later. Modes: For you, Shuffle, Due, Missed, Saved. Filters: module, difficulty, status, search. |
 | **Spaced repetition** | Leitner boxes (Untracked → Committed → In review → Merged). Due first-try answers promote; misses come back in 10 minutes; answering a card that isn't due is practice (no promotion, no XP). |
 | **XP & levels** | Ledger of individually-keyed XP transactions (no double awards). 7 levels (Curious → Systems Thinker), each gated by XP **and** specific recalled cards **and** shipped drops. Locked cards stay readable as previews with a path to their prerequisites. |
-| **Repo** | Grid of all 170 cards with a Big-O legend, module pages with a tracklist, card pages with the knowledge graph (builds on / connects to / referenced by). |
+| **Repo** | Grid of all 170 cards with a difficulty legend, module pages with a tracklist, card pages with the knowledge graph (builds on / connects to / referenced by). |
 | **Build** | 8 Drops: first webpage, CSS, button counter, score tracker, data transform, API (simulated server), mini database (TinySQL), and a full mini app. Mission · Editor · Result panels; tabs on mobile. |
 | **Under the hood** | Built only from what really happened: line diff vs. the starter, recorded event trace (listener → event → handler → DOM change, request → response → JSON), matched code patterns with line numbers, CSS rule matches, SQL step-by-step. |
 | **Demo** | `#/demo` — an 8-section guided tour on a separate in-memory profile using the same engine and components: answer, shuffle, earn XP, unlock a (demo) level, write/understand/ship code, explore the curriculum. |

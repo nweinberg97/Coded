@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
-import { CONCEPT_BY_ID, CONCEPTS, hexId, rarityOf, serialOf, splitTerm, TRACK_BY_ID } from '../content';
+import { CONCEPT_BY_ID, CONCEPTS, hexId, rarityOf, serialOf, splitTerm, tierDescription, TRACK_BY_ID } from '../content';
 import type { Concept } from '../content/types';
 import { CHALLENGE_BY_ID } from '../content/challenges';
 import { evaluateAnswer, type Evaluation } from '../engine/evaluate';
@@ -210,7 +210,10 @@ export function StudyCard({
         )}
 
         <footer className="study-bottom">
-          <span className="study-rarity" title={`${rarity.name} complexity — ${rarity.blurb}`}>{rarity.label}</span>
+          <span className="study-rarity" title={tierDescription(rarity)}>
+            {rarity.label}
+            <span className="tier-side">{rarity.bigO} · {rarity.name}</span>
+          </span>
           <DifficultyPips difficulty={concept.difficulty} />
           <StatusTag status={status} />
           {phase === 'question' && reward > 0 && <span className="xp-chip">+{reward} XP</span>}

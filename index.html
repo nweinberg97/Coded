@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0b0c" />
+    <meta name="description" content="Coded — learn how software actually works. Collect concept cards, earn XP, and ship real code in a browser sandbox." />
+    <!--
+      App-level CSP. Deliberately has no script-src/style-src: sandboxed srcdoc previews INHERIT the
+      embedding page's policy, and learner code is inline. The preview documents carry their own strict
+      CSP (no network, no external resources) — see src/sandbox/protocol.ts.
+    -->
+    <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data: blob:" />
+    <title>Coded</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="fonts/InterDisplay-Black.woff" as="font" type="font/woff" crossorigin />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>Coded needs JavaScript to run — it’s an interactive app that runs entirely in your browser.</noscript>
+    <script type="module" src="assets/app.js"></script>
+  </body>
+</html>

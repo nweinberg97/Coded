@@ -1,0 +1,29 @@
+{
+  "name": "coded",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Coded — learn how software works through collectible flashcards, XP and a real coding sandbox.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/build.mjs --serve",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/build.mjs --preview",
+    "test": "tsx --test tests/*.test.ts",
+    "test:e2e": "tsx scripts/e2e.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "esbuild": "^0.28.0",
+    "playwright": "^1.56.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

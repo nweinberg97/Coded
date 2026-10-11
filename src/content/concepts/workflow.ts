@@ -728,7 +728,7 @@ const concepts: Concept[] = [
     analogy:
       'After testing each light bulb, you wire up the room and flip the switch to see if the bulbs, wires and switch work as a system.',
     example:
-      'A test starts the API against a temporary PostgreSQL database, sends POST /orders with `{"items": [42]}`, then queries the `orders` table and checks a row was saved with status `"pending"`.',
+      'A test starts the API against a temporary PostgreSQL database, sends `POST /orders` with `{"items": [42]}`, then queries the `orders` table and checks a row was saved with status `"pending"`.',
     whyItMatters:
       'Many real bugs live in the seams between components. Integration tests catch them before users do, at the cost of being slower and more complex to set up than unit tests.',
     misconception:
@@ -896,7 +896,7 @@ const concepts: Concept[] = [
     analogy:
       'Opening night for a play: rehearsals (development) and dress rehearsal (staging) are done; now the show goes on in front of a real audience.',
     example:
-      '`git push heroku main`, `vercel --prod` or a CI job that uploads a Docker image and restarts containers. Afterwards https://shop.example serves version `v2.14.0` instead of `v2.13.2`.',
+      '`git push heroku main`, `vercel --prod` or a CI job that uploads a Docker image and restarts containers. Afterwards `https://shop.example` serves version `v2.14.0` instead of `v2.13.2`.',
     whyItMatters:
       'Deploys are when changes become real — and when many incidents start. Teams track how often they deploy and how often deploys cause problems as key measures of engineering health.',
     misconception:
@@ -1010,7 +1010,7 @@ const concepts: Concept[] = [
     analogy:
       'A test kitchen, a dress rehearsal and opening night: the same recipe or play, run in different settings with different stakes.',
     example:
-      'https://staging.shop.example uses a test Stripe key and a copy of the database with fake customers; https://shop.example uses the live key and real orders. The same build moves from staging to production once checked.',
+      '`https://staging.shop.example` uses a test Stripe key and a copy of the database with fake customers; `https://shop.example` uses the live key and real orders. The same build moves from staging to production once checked.',
     whyItMatters:
       '"Is that in staging or prod?" is one of the most common engineering questions. Mixing environments up — running a test script against production — is a classic way to cause an outage or data loss.',
     misconception:
@@ -1125,7 +1125,7 @@ const concepts: Concept[] = [
     analogy:
       'A hospital heart monitor: it tracks a few vital numbers constantly and beeps when one goes out of the safe range.',
     example:
-      'A Datadog alert: "error rate on POST /checkout above 2% for 5 minutes" → notifies the on-call engineer via PagerDuty. An uptime checker pings https://shop.example every minute and posts in Slack if it doesn’t get a 200 OK.',
+      'A Datadog alert: "error rate on `POST /checkout` above 2% for 5 minutes" → notifies the on-call engineer via PagerDuty. An uptime checker pings `https://shop.example` every minute and posts in Slack if it doesn’t get a `200 OK`.',
     whyItMatters:
       'Without monitoring, you find out about outages from angry customers or social media. With it, teams spot and fix problems in minutes, and can prove they meet promised uptime (like 99.9%).',
     misconception:

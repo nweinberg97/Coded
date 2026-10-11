@@ -69,7 +69,7 @@ const concepts: Concept[] = [
     analogy:
       'If the internet is the road system, the web is one particular delivery service that uses those roads — a giant library courier that brings you any page you ask for, with each page pointing to others.',
     example:
-      'Typing https://en.wikipedia.org/wiki/Octopus into a browser fetches one web page. Clicking the blue link “cephalopod” on it fetches another. That chain of linked pages is the web; the cables carrying them are the internet.',
+      'Typing `https://en.wikipedia.org/wiki/Octopus` into a browser fetches one web page. Clicking the blue link “cephalopod” on it fetches another. That chain of linked pages is the web; the cables carrying them are the internet.',
     whyItMatters:
       'Most products people build — marketing sites, SaaS dashboards, online stores — are web products. Knowing the web is a layer on top of the internet helps you understand why a mobile app or an email can work while a website is down, and vice versa.',
     misconception:
@@ -124,7 +124,7 @@ const concepts: Concept[] = [
     analogy:
       'A customer at a coffee shop counter. The customer places the order; the barista (server) makes it and hands it back.',
     example:
-      'When you open the Gmail app, it (the client) sends a request like GET https://mail.google.com/mail/feed to Google’s servers and then displays the list of emails that comes back.',
+      'When you open the Gmail app, it (the client) sends a request like `GET https://mail.google.com/mail/feed` to Google’s servers and then displays the list of emails that comes back.',
     whyItMatters:
       'Engineers constantly talk about “client-side” vs “server-side”. Knowing which side does what tells you where a bug lives, what users can see or tamper with, and what runs on their device vs your infrastructure.',
     misconception:
@@ -181,7 +181,7 @@ const concepts: Concept[] = [
     analogy:
       'The kitchen in a restaurant. It does not walk out to diners; it waits for orders to come in and sends plates back out.',
     example:
-      'When a browser asks for https://shop.example.com/products/42, the shop’s server looks up product 42 in its database, builds a page with the name and price, and responds with HTML and status 200 OK.',
+      'When a browser asks for `https://shop.example.com/products/42`, the shop’s server looks up product 42 in its database, builds a page with the name and price, and responds with HTML and status `200 OK`.',
     whyItMatters:
       'Servers hold the things users must not control directly — the database, passwords, payment logic. Hosting costs, uptime and scaling (“can we handle Black Friday?”) are all questions about servers.',
     misconception:
@@ -236,7 +236,7 @@ const concepts: Concept[] = [
     analogy:
       'A record player for the web: the record (code) holds the music in a format you cannot read by eye; the player reads it and turns it into something you can experience.',
     example:
-      'Type https://www.bbc.com/news into Safari. Safari looks up the address, sends GET /news to BBC’s server, receives about 300 KB of HTML plus CSS, images and scripts, and paints the headlines on your screen in under a second.',
+      'Type `https://www.bbc.com/news` into Safari. Safari looks up the address, sends `GET /news` to BBC’s server, receives about 300 KB of HTML plus CSS, images and scripts, and paints the headlines on your screen in under a second.',
     whyItMatters:
       'The browser is the most common runtime for software today. Different browsers can show the same page slightly differently, which is why teams test “in Safari and Chrome”, and why browser developer tools are a key debugging aid.',
     misconception:
@@ -290,7 +290,7 @@ const concepts: Concept[] = [
     analogy:
       'Filling in an order slip at a deli counter: what you want, how much, and your ticket number — handed over the counter for someone else to fulfil.',
     example:
-      'A request to log in might look like:\nPOST /api/login HTTP/1.1\nHost: app.example.com\nContent-Type: application/json\n\n{"email": "sam@example.com", "password": "••••••"}',
+      'A request to log in might look like:\n`POST /api/login HTTP/1.1`\n`Host: app.example.com`\n`Content-Type: application/json`\n\n`{"email": "sam@example.com", "password": "••••••"}`',
     whyItMatters:
       'Requests are the basic unit of everything online. Page speed, API costs, rate limits and many bugs (“the request never left the browser”) are all discussed in terms of requests.',
     misconception:
@@ -344,7 +344,7 @@ const concepts: Concept[] = [
     analogy:
       'The plate that comes back from the kitchen, with a note: “Here is your order” — or “Sorry, we are out of salmon.”',
     example:
-      'HTTP/1.1 200 OK\nContent-Type: application/json\n\n{"id": 42, "name": "Linen shirt", "price": 49.00}\n\nIf the product did not exist, the server would instead reply 404 Not Found.',
+      '`HTTP/1.1 200 OK`\n`Content-Type: application/json`\n\n`{"id": 42, "name": "Linen shirt", "price": 49.00}`\n\nIf the product did not exist, the server would instead reply `404 Not Found`.',
     whyItMatters:
       'When something breaks, the response tells you why. Reading status codes (2xx success, 4xx your mistake, 5xx the server’s mistake) is one of the fastest ways to diagnose a problem.',
     misconception:
@@ -455,7 +455,7 @@ const concepts: Concept[] = [
     analogy:
       'A standard order form used by every shop in a city: every customer fills it in the same way and every shop replies on the same kind of receipt.',
     example:
-      'GET /about HTTP/1.1\nHost: www.example.com\n\n→ HTTP/1.1 200 OK\nContent-Type: text/html\n\n<html>…About us…</html>',
+      '`GET /about HTTP/1.1`\n`Host: www.example.com`\n\n→ `HTTP/1.1 200 OK`\n`Content-Type: text/html`\n\n`<html>…About us…</html>`',
     whyItMatters:
       'Almost every app and API you will deal with talks HTTP. Terms like GET, POST, status codes (404, 500), headers and cookies all come from HTTP, so understanding it unlocks a lot of engineering conversations.',
     misconception:
@@ -511,7 +511,7 @@ const concepts: Concept[] = [
     analogy:
       'HTTP is a postcard: every mail carrier can read it. HTTPS is the same letter in a locked box that only the recipient has the key to.',
     example:
-      'Visiting https://bank.example.com: the browser and server do a TLS “handshake”, the server shows a certificate issued by a trusted authority (e.g. Let’s Encrypt) for bank.example.com, they agree on keys, and every request after that is scrambled on the wire.',
+      'Visiting `https://bank.example.com`: the browser and server do a TLS “handshake”, the server shows a certificate issued by a trusted authority (e.g. Let’s Encrypt) for `bank.example.com`, they agree on keys, and every request after that is scrambled on the wire.',
     whyItMatters:
       'Browsers now flag non-HTTPS sites as “Not secure”, search engines rank them lower, and many features (camera, location, service workers) only work over HTTPS. Free certificates mean there is no excuse to ship without it.',
     misconception:
@@ -564,7 +564,7 @@ const concepts: Concept[] = [
     analogy:
       'A full postal address: country and city (domain), street and house number (path), and even “attention: Accounts dept.” (the query string).',
     example:
-      'https://shop.example.com:443/shoes/running?size=42&color=blue#reviews\n• https = protocol\n• shop.example.com = domain\n• 443 = port (usually hidden)\n• /shoes/running = path\n• ?size=42&color=blue = query parameters\n• #reviews = fragment (a spot on the page)',
+      '`https://shop.example.com:443/shoes/running?size=42&color=blue#reviews`\n• `https` = protocol\n• `shop.example.com` = domain\n• `443` = port (usually hidden)\n• `/shoes/running` = path\n• `?size=42&color=blue` = query parameters\n• `#reviews` = fragment (a spot on the page)',
     whyItMatters:
       'URLs are how you share, bookmark, track and route everything on the web. Good URL design affects SEO, analytics (UTM parameters), and whether a link pasted in Slack opens the exact view you meant.',
     misconception:
@@ -621,7 +621,7 @@ const concepts: Concept[] = [
     analogy:
       'A contact name in your phone. You tap “Mum”, not +44 7700 900123 — the phone looks up the number for you.',
     example:
-      'notion.so, gov.uk and openai.com are domain names. Reading right to left: “.com” is the top-level domain, “openai” is the registered name, and “platform.openai.com” would be a subdomain.',
+      '`notion.so`, `gov.uk` and `openai.com` are domain names. Reading right to left: “`.com`” is the top-level domain, “`openai`” is the registered name, and “`platform.openai.com`” would be a subdomain.',
     whyItMatters:
       'Your domain is part of your brand and your security: email deliverability, HTTPS certificates and login cookies are all tied to it. Letting a domain expire can take a whole business offline.',
     misconception:
@@ -680,7 +680,7 @@ const concepts: Concept[] = [
     analogy:
       'A phone number for a machine. Routers along the way read the number to decide which direction to pass each packet, like telephone exchanges routing a call.',
     example:
-      'Run `ping example.com` in a terminal and you will see a reply from an address such as 93.184.216.34 — that is the server the domain currently points to.',
+      'Run `ping example.com` in a terminal and you will see a reply from an address such as `93.184.216.34` — that is the server the domain currently points to.',
     whyItMatters:
       'IP addresses show up in logs, security rules (“only allow traffic from our office IP”), rate limiting, fraud detection and rough geolocation. They are also why DNS exists — nobody wants to memorise them.',
     misconception:
@@ -734,7 +734,7 @@ const concepts: Concept[] = [
     analogy:
       'The contacts app or an old phone book: you look up a name and get the number to dial.',
     example:
-      'Run `nslookup github.com` and you get back something like “Address: 140.82.112.4”. Behind the scenes a resolver asked the root servers → the .com servers → GitHub’s own name servers, then cached the answer for a few minutes (its TTL).',
+      'Run `nslookup github.com` and you get back something like “`Address: 140.82.112.4`”. Behind the scenes a resolver asked the root servers → the `.com` servers → GitHub’s own name servers, then cached the answer for a few minutes (its TTL).',
     whyItMatters:
       'DNS is how you point a domain at your hosting, set up company email (MX records) and verify ownership for tools like Google Workspace. Misconfigured DNS is a classic cause of “the site is down” — the servers are fine, nobody can find them.',
     misconception:
@@ -788,7 +788,7 @@ const concepts: Concept[] = [
     analogy:
       'An apartment building: the street address (IP) gets the parcel to the building, the apartment number (port) gets it to the right resident.',
     example:
-      'https://example.com quietly means port 443; http:// means 80. A developer running a site locally visits http://localhost:3000, and a PostgreSQL database typically listens on port 5432.',
+      '`https://example.com` quietly means port 443; `http://` means 80. A developer running a site locally visits `http://localhost:3000`, and a PostgreSQL database typically listens on port 5432.',
     whyItMatters:
       'Ports come up in deployment (“the app listens on port 8080”), firewall rules (“only open 443 to the public”), and local development errors like “EADDRINUSE: port 3000 already in use”.',
     misconception:
@@ -843,7 +843,7 @@ const concepts: Concept[] = [
     analogy:
       'A neighbourhood’s streets. Houses (devices) are connected by roads (links) so people and parcels can move between them.',
     example:
-      'At home, your router creates a local network (LAN) where your laptop might be 192.168.1.12 and your printer 192.168.1.30. When you print, data goes laptop → router → printer without ever touching the internet.',
+      'At home, your router creates a local network (LAN) where your laptop might be `192.168.1.12` and your printer `192.168.1.30`. When you print, data goes laptop → router → printer without ever touching the internet.',
     whyItMatters:
       'Lots of practical issues — “works at home but not on the VPN”, “the office printer can’t be found”, slow video calls — are network problems. Knowing that devices communicate through routers and links helps you narrow them down.',
     misconception:
@@ -890,7 +890,7 @@ const concepts: Concept[] = [
     analogy:
       'The time it takes a car to drive from one city to another. A wider highway (more bandwidth) lets more cars travel at once, but each car still takes the same time to make the trip.',
     example:
-      '`ping example.com` → “time=12 ms” from a nearby server, but “time=280 ms” from a server on the other side of the world. A video call above ~150 ms starts to feel awkward, with people talking over each other.',
+      '`ping example.com` → “`time=12 ms`” from a nearby server, but “`time=280 ms`” from a server on the other side of the world. A video call above ~150 ms starts to feel awkward, with people talking over each other.',
     whyItMatters:
       'Pages that make many round trips feel slow on high-latency connections even if the internet is “fast”. It is why companies use CDNs and put servers near users, and why games and video calls are so sensitive to it.',
     misconception:
@@ -998,7 +998,7 @@ const concepts: Concept[] = [
     analogy:
       'A chain of local warehouses. Instead of shipping every order from one central factory, popular products are stocked near customers so delivery takes hours, not days.',
     example:
-      'Your logo lives at https://cdn.example.com/logo.png served by Cloudflare. A user in Paris gets it from Cloudflare’s Paris data centre in 8 ms; only the first request in that region ever reaches your origin server in Oregon.',
+      'Your logo lives at `https://cdn.example.com/logo.png` served by Cloudflare. A user in Paris gets it from Cloudflare’s Paris data centre in 8 ms; only the first request in that region ever reaches your origin server in Oregon.',
     whyItMatters:
       'CDNs are a standard part of almost every serious website: they cut load times, absorb traffic spikes and DDoS attacks, and reduce hosting bills. Platforms like Vercel and Netlify put your site on a CDN automatically.',
     misconception:
@@ -1055,7 +1055,7 @@ const concepts: Concept[] = [
     analogy:
       'HTTP is a walkie-talkie exchange where you must ask each time; a WebSocket is a phone call left open, where either person can speak whenever they like.',
     example:
-      'const socket = new WebSocket("wss://chat.example.com/room/42");\nsocket.onmessage = (e) => showMessage(e.data);\nsocket.send("Hi everyone!");\n\nWhen someone else posts, the server pushes the message down the same open connection instantly.',
+      '`const socket = new WebSocket("wss://chat.example.com/room/42");`\n`socket.onmessage = (e) => showMessage(e.data);`\n`socket.send("Hi everyone!");`\n\nWhen someone else posts, the server pushes the message down the same open connection instantly.',
     whyItMatters:
       'Real-time features — Slack messages, Google Docs cursors, live dashboards, multiplayer games — usually rely on WebSockets (or similar). They cost more to run because the server holds thousands of open connections.',
     misconception:

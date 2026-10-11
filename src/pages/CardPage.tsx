@@ -5,6 +5,7 @@ import { Link } from '../app/router';
 import { useProgress } from '../app/store';
 import { CardFace } from '../components/CardFace';
 import { Icon } from '../components/Icon';
+import { RichText } from '../components/RichText';
 import { EmptyState, StatusTag } from '../components/ui';
 
 export function CardPage({ id }: { id: string }) {
@@ -60,42 +61,42 @@ export function CardPage({ id }: { id: string }) {
             </div>
           )}
           <h1 className="h-display h-card">{c.term}</h1>
-          <p className="lede">{c.definition}</p>
+          <div className="para lede"><RichText text={c.definition} /></div>
           <section>
             <h2 className="h-sub">In plain English</h2>
-            <p>{c.plainEnglish}</p>
+            <div className="para"><RichText text={c.plainEnglish} /></div>
           </section>
           {c.analogy && (
             <section>
               <h2 className="h-sub">Think of it like</h2>
-              <p>{c.analogy}</p>
+              <div className="para"><RichText text={c.analogy!} /></div>
             </section>
           )}
           <section>
             <h2 className="h-sub">Example</h2>
-            <p className="example">{c.example}</p>
+            <div className="example"><RichText text={c.example} /></div>
           </section>
           <section>
             <h2 className="h-sub">Why it matters</h2>
-            <p>{c.whyItMatters}</p>
+            <div className="para"><RichText text={c.whyItMatters} /></div>
           </section>
           {c.misconception && (
             <section className="fact-warn-block">
               <h2 className="h-sub">Don’t mix it up</h2>
-              <p>{c.misconception}</p>
+              <div className="para"><RichText text={c.misconception!} /></div>
             </section>
           )}
           {c.deepDive && (
             <details className="deeper-details">
               <summary>Go deeper</summary>
-              <p>{c.deepDive}</p>
+              <div className="para"><RichText text={c.deepDive!} /></div>
             </details>
           )}
           {challenge && (
             <Link to={`/build/${challenge.id}`} className="callout-build">
               <Icon name="code" size={20} />
               <div>
-                <strong>Use it for real · Drop {String(challenge.number).padStart(2, '0')}: {challenge.title}</strong>
+                <strong>Use it for real · Project {String(challenge.number).padStart(2, '0')}: {challenge.title}</strong>
                 <span>{challenge.tagline}</span>
               </div>
               <Icon name="arrow" size={18} />

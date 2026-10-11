@@ -14,7 +14,7 @@ const concepts: Concept[] = [
     analogy:
       'Sheet music. It is written for people to read and edit, but its whole purpose is to tell a performer exactly what to play.',
     example:
-      'A file called counter.js containing `let count = 0; function addOne() { count = count + 1; }` is source code. A developer can open it, read it, and change `+ 1` to `+ 2`.',
+      'A file called `counter.js` containing `let count = 0; function addOne() { count = count + 1; }` is source code. A developer can open it, read it, and change `+ 1` to `+ 2`.',
     whyItMatters:
       'When someone says “the code”, “the repo” or “open source”, they mean these text files. Owning the source code means you can change how the product behaves; without it you can only use the finished app.',
     misconception:
@@ -1497,7 +1497,7 @@ const concepts: Concept[] = [
     analogy:
       'A house frame from a builder: walls and rooms are already laid out; you choose the paint, fixtures and furniture. Versus a library, which is like a toolbox — you build however you like.',
     example:
-      'In Next.js, a file at `app/about/page.tsx` that exports a component automatically becomes the /about page. You never write the routing code — the framework finds your file and calls it.',
+      'In Next.js, a file at `app/about/page.tsx` that exports a component automatically becomes the `/about` page. You never write the routing code — the framework finds your file and calls it.',
     whyItMatters:
       'Frameworks (Next.js, Django, Ruby on Rails, Laravel, Angular) let small teams build big apps quickly and consistently, because everyone follows the same conventions. The trade-off: you work within its rules, and switching frameworks later is costly.',
     misconception:

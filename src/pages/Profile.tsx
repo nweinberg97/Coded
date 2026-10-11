@@ -74,7 +74,7 @@ export function ProfilePage() {
           </div>
           <div className="wrapped-tile wt-f">
             <div className="wt-big">{shipped}/{CHALLENGES.length}</div>
-            <div className="wt-small">drops shipped</div>
+            <div className="wt-small">projects shipped</div>
           </div>
           {bestTrack && bestTrack.n > 0 && (
             <div className="wrapped-tile wt-g">
@@ -87,7 +87,7 @@ export function ProfilePage() {
 
       <section aria-labelledby="ladder-h">
         <h2 id="ladder-h" className="h-section">Level ladder</h2>
-        <p className="muted">Levels need XP <em>and</em> proof: specific cards recalled and drops shipped. Grinding easy cards alone won’t get you there.</p>
+        <p className="muted">Levels need XP <em>and</em> proof: specific cards recalled and projects shipped. Grinding easy cards alone won’t get you there.</p>
         <ol className="ladder">
           {LEVELS.map((def) => {
             const st = requirementStatus(def, { xp: p.xp, learned: p.learned, shipped: (id) => !!s.shipped[id] });

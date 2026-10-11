@@ -82,6 +82,23 @@ await step('answers a flashcard correctly and earns 15 XP', async () => {
   await page.screenshot({ path: join(shots, 'card-correct.png') });
 });
 
+await step('correct answer shows what you wrote and the key ideas found, as separate parts', async () => {
+  const box = page.locator('[data-testid="why-correct"]');
+  await box.waitFor();
+  const t = await box.innerText();
+  expect(/You wrote/i.test(t) && /Key idea/i.test(t), t);
+  expect((await box.locator('.idea-hit').count()) >= 1, 'idea chips');
+});
+
+await step('examples render code as code', async () => {
+  await page.goto(`${base}#/card/variable`);
+  await page.locator('.example code.ic').first().waitFor();
+  await page.goto(`${base}#/card/sql`);
+  expect((await page.locator('.example code').count()) >= 1, 'SQL example has code');
+  await page.screenshot({ path: join(shots, 'card-code.png') });
+  await page.goto(`${base}#/learn`);
+});
+
 await step('repeated submission cannot double-award XP', async () => {
   await page.keyboard.press('Enter'); // focus is on Next; a stray Enter must not re-award
   await page.waitForTimeout(200);
@@ -227,6 +244,53 @@ for (const ch of CHALLENGES) {
     if (ch.number === 7 || ch.number === 2) await page.screenshot({ path: join(shots, `drop-${ch.number}.png`) });
   });
 }
+
+// Real-world feedback: learners solve things differently. Any working solution must ship.
+const ALT = {
+  'ship-app': [
+    ['value.trim().length < 1', (sol) => sol.replace('if (value === "") {', 'if (value.trim().length < 1) {')],
+    ['regex /^\\s*$/.test(value)', (sol) => sol.replace('if (value === "") {', 'if (/^\\s*$/.test(value)) {')],
+    ['!value', (sol) => sol.replace('if (value === "") {', 'if (!value) {')],
+  ],
+  'button-counter': [
+    ['onclick instead of addEventListener', (sol) => sol.replace('button.addEventListener("click", () => {', 'button.onclick = () => {').replace(/\n  }\);\n<\/script>/, '\n  };\n</script>')],
+  ],
+  'data-transform': [
+    ['a for loop + if instead of .filter()', (sol) => sol.replace('const affordable = sneakers.filter((shoe) => shoe.price < 200);', 'const affordable = [];\n  for (const s of sneakers) { if (s.price < 200) affordable.push(s); }')],
+  ],
+};
+for (const [id, variants] of Object.entries(ALT)) {
+  for (const [name, mutate] of variants) {
+    await step(`alternative solution ships: ${id} using ${name}`, async () => {
+      const code = mutate(SOLUTIONS[id]);
+      expect(code !== SOLUTIONS[id], 'variant differs from reference');
+      await page.goto(`${base}#/build/${id}`);
+      await closeLevelUp();
+      await page.locator('[data-testid="code-editor"]').fill(code);
+      await page.locator('[data-testid="ship"]').click();
+      const res = page.locator('[data-testid="ship-result"]');
+      await res.waitFor({ timeout: 20000 });
+      if (!(await res.innerText()).includes('All')) {
+        throw new Error('failed: ' + (await page.locator('[data-testid="ship-checks"] li.fail').allInnerTexts()).join(' | '));
+      }
+    });
+  }
+}
+
+await step('narrow screen: Ship keeps you on the Code tab and shows progress + results there', async () => {
+  const n = await ctx.newPage();
+  await n.setViewportSize({ width: 820, height: 1000 });
+  await n.goto(`${base}#/build/ship-app`);
+  await n.locator('[data-testid="code-editor"]').fill(CHALLENGES.find((c) => c.id === 'ship-app').starter);
+  await n.locator('[data-testid="ship"]').click();
+  await n.locator('[data-testid="ship-checking"]').waitFor({ timeout: 5000 });
+  await n.locator('[data-testid="ship-result"]').waitFor({ timeout: 20000 });
+  expect(await n.locator('[data-testid="code-editor"]').isVisible(), 'editor still visible');
+  expect((await n.locator('.ws-tab.is-active').innerText()).includes('Code'), 'Code tab still active');
+  expect((await n.locator('[data-testid="ship-checks"] li.fail').count()) > 0, 'failed checks listed under editor');
+  await n.screenshot({ path: join(shots, 'ship-narrow.png') });
+  await n.close();
+});
 
 await step('shipping awards XP only when eligible and only once', async () => {
   const txt = await page.locator('.sidebar-level-xp').innerText();

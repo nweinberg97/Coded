@@ -8,6 +8,7 @@ import { describeDue, statusOf, type Outcome } from '../engine/srs';
 import { useProgress } from '../app/store';
 import { Link } from '../app/router';
 import { Icon } from './Icon';
+import { RichText } from './RichText';
 import { DifficultyPips, Kbd, StatusTag } from './ui';
 
 export const MAX_TRIES_BEFORE_REVEAL = 3;
@@ -164,37 +165,57 @@ export function StudyCard({
               )}
             </div>
             <div className="study-term study-term-sm">{title}</div>
-            <p className="canonical">{concept.canonicalAnswer}</p>
-            {outcome !== 'missed' && evaluation && evaluation.hit.length > 0 && (
-              <p className="why-correct">
-                <strong>Why your answer counts:</strong> you captured {evaluation.hit.map((h) => h.label).join(' and ')}.
-              </p>
+            {outcome !== 'missed' && evaluation && (
+              <div className="checked" data-testid="why-correct">
+                <div className="checked-row">
+                  <span className="checked-k">You wrote</span>
+                  <q className="checked-answer">{answer.trim()}</q>
+                </div>
+                <div className="checked-row">
+                  <span className="checked-k">{evaluation.hit.length > 1 ? 'Key ideas found' : 'Key idea found'}</span>
+                  <ul className="idea-list">
+                    {evaluation.hit.length > 0 ? (
+                      evaluation.hit.map((h) => (
+                        <li key={h.id} className="idea idea-hit">
+                          <Icon name="check" size={13} /> {h.label}
+                        </li>
+                      ))
+                    ) : (
+                      <li className="idea idea-hit">
+                        <Icon name="check" size={13} /> Matches an accepted answer
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </div>
             )}
+            <div className="checked-k canonical-k">{outcome === 'missed' ? 'Answer' : 'Model answer'}</div>
+            <div className="para canonical"><RichText text={concept.canonicalAnswer} /></div>
             <dl className="facts">
               <div>
                 <dt>In plain English</dt>
-                <dd>{concept.plainEnglish}</dd>
+                <dd><RichText text={concept.plainEnglish} /></dd>
               </div>
               {concept.analogy && (
                 <div>
                   <dt>Think of it like</dt>
-                  <dd>{concept.analogy}</dd>
+                  <dd><RichText text={concept.analogy} /></dd>
                 </div>
               )}
               <div>
                 <dt>Example</dt>
-                <dd>{concept.example}</dd>
+                <dd className="example-dd"><RichText text={concept.example} /></dd>
               </div>
               {!compact && (
                 <div>
                   <dt>Why it matters</dt>
-                  <dd>{concept.whyItMatters}</dd>
+                  <dd><RichText text={concept.whyItMatters} /></dd>
                 </div>
               )}
               {concept.misconception && !compact && (
                 <div className="fact-warn">
                   <dt>Don’t mix it up</dt>
-                  <dd>{concept.misconception}</dd>
+                  <dd><RichText text={concept.misconception} /></dd>
                 </div>
               )}
             </dl>
@@ -203,7 +224,7 @@ export function StudyCard({
                 <button className="link-btn" onClick={() => setDeeper((d) => !d)} aria-expanded={deeper}>
                   <Icon name="layers" size={16} /> {deeper ? 'Hide' : 'Go deeper'}
                 </button>
-                {deeper && <p>{concept.deepDive}</p>}
+                {deeper && <div className="para"><RichText text={concept.deepDive} /></div>}
               </div>
             )}
           </div>
@@ -264,20 +285,32 @@ export function StudyCard({
           )}
           {evaluation && evaluation.verdict !== 'correct' && (
             <div className={`feedback feedback-${evaluation.verdict}`} role="alert" data-testid="feedback">
-              <strong>{evaluation.verdict === 'partial' ? 'Getting warm.' : 'Not quite.'}</strong> {evaluation.message}
-              {(evaluation.hit.length > 0 || evaluation.missed.length > 0) && !evaluation.wrongFeedback && (
-                <div className="idea-chips">
-                  {evaluation.hit.map((h) => (
-                    <span key={h.id} className="idea idea-hit">
-                      <Icon name="check" size={12} /> {h.label}
-                    </span>
-                  ))}
-                  {evaluation.verdict === 'partial' &&
-                    evaluation.missed.map((h) => (
-                      <span key={h.id} className="idea idea-miss">
-                        missing: {h.label}
-                      </span>
-                    ))}
+              <div className="feedback-head">
+                <strong>{evaluation.verdict === 'partial' ? 'Getting warm' : 'Not quite'}</strong>
+                <span>{evaluation.message}</span>
+              </div>
+              {evaluation.verdict === 'partial' && (
+                <div className="feedback-ideas">
+                  <div className="checked-row">
+                    <span className="checked-k">Found</span>
+                    <ul className="idea-list">
+                      {evaluation.hit.map((h) => (
+                        <li key={h.id} className="idea idea-hit">
+                          <Icon name="check" size={13} /> {h.label}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="checked-row">
+                    <span className="checked-k">Still missing</span>
+                    <ul className="idea-list">
+                      {evaluation.missed.map((h) => (
+                        <li key={h.id} className="idea idea-miss">
+                          <span className="idea-dot" aria-hidden /> {h.label}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               )}
               {tries >= MAX_TRIES_BEFORE_REVEAL && (
@@ -305,7 +338,7 @@ export function StudyCard({
             </button>
             {challenge && linkTo && (
               <Link className="btn btn-ghost" to={`/build/${challenge.id}`}>
-                <Icon name="code" size={16} /> Try it: Drop {String(challenge.number).padStart(2, '0')}
+                <Icon name="code" size={16} /> Try it: Project {String(challenge.number).padStart(2, '0')}
               </Link>
             )}
           </div>

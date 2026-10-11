@@ -486,7 +486,7 @@ const concepts: Concept[] = [
     analogy:
       'Like GPS coordinates for ideas. Two cafés on the same street have nearly the same coordinates; two sentences that mean the same thing have nearly the same embedding.',
     example:
-      '"How do I reset my password?" → [0.021, -0.183, 0.447, …, 0.090] (say 1,024 numbers). "I forgot my login" → [0.019, -0.170, 0.431, …] — very close. "Best pizza in town" → [-0.302, 0.255, -0.011, …] — far away.',
+      '"How do I reset my password?" → `[0.021, -0.183, 0.447, …, 0.090]` (say 1,024 numbers). "I forgot my login" → `[0.019, -0.170, 0.431, …]` — very close. "Best pizza in town" → `[-0.302, 0.255, -0.011, …]` — far away.',
     whyItMatters:
       'Embeddings power semantic search ("find docs about refunds" even when they say "money back"), recommendations, duplicate detection, clustering of feedback, and RAG. They are cheap to compute compared to running a chat model.',
     misconception:
@@ -657,7 +657,7 @@ const concepts: Concept[] = [
     analogy:
       'Like asking someone to fill in a form with labeled boxes instead of writing you a letter — far easier to file and process.',
     example:
-      'Input: an angry support email. Schema: {"sentiment": "positive"|"neutral"|"negative", "product": string, "refund_requested": boolean}. Model output: {"sentiment": "negative", "product": "Pro plan", "refund_requested": true} — which code can route straight to the billing team.',
+      'Input: an angry support email. Schema: `{"sentiment": "positive"|"neutral"|"negative", "product": string, "refund_requested": boolean}`. Model output: `{"sentiment": "negative", "product": "Pro plan", "refund_requested": true}` — which code can route straight to the billing team.',
     whyItMatters:
       'Structured output is what turns an LLM from a chat toy into a component inside real software: extracting data from documents, classifying tickets, filling databases, and powering tool calls. Without it, code breaks whenever the model words things differently.',
     misconception:
@@ -710,7 +710,7 @@ const concepts: Concept[] = [
     analogy:
       'A manager who cannot leave their desk: they fill in a request slip ("look up order 4821"), an assistant does the legwork and hands back the result, and the manager writes the reply to the customer.',
     example:
-      'User: "Do I need an umbrella in Lisbon tomorrow?" Model outputs: {"tool": "get_forecast", "arguments": {"city": "Lisbon", "date": "2026-10-10"}}. The app calls a weather API, gets {"rain_chance": 0.8}, sends that back, and the model replies: "Yes — 80% chance of rain."',
+      'User: "Do I need an umbrella in Lisbon tomorrow?" Model outputs: `{"tool": "get_forecast", "arguments": {"city": "Lisbon", "date": "2026-10-10"}}`. The app calls a weather API, gets `{"rain_chance": 0.8}`, sends that back, and the model replies: "Yes — 80% chance of rain."',
     whyItMatters:
       'Tool calling connects models to real systems — databases, calendars, payment APIs, code execution — and is the foundation of AI agents. It is also where risk lives: an app that blindly runs whatever the model requests can be tricked into harmful actions, so permissions and confirmations matter.',
     misconception:
@@ -771,7 +771,7 @@ const concepts: Concept[] = [
     analogy:
       'The difference between a reference librarian (answers your question) and a research assistant you send off with an errand (goes, tries things, comes back with the result).',
     example:
-      'Task: "Why is the signup test failing?" Loop: run the tests → read error "email undefined" → open signup.js → notice a renamed field → edit the file → run tests again → all pass → report back with a summary of the change.',
+      'Task: "Why is the signup test failing?" Loop: run the tests → read error "`email undefined`" → open `signup.js` → notice a renamed field → edit the file → run tests again → all pass → report back with a summary of the change.',
     whyItMatters:
       'Agents can take on multi-step work — coding, research, operations — not just answer questions. They also raise new concerns: cost (many model calls per task), reliability (errors compound across steps), and safety (an agent with access to email or production systems can do real damage), so permissions and human checkpoints matter.',
     misconception:
@@ -945,7 +945,7 @@ const concepts: Concept[] = [
     analogy:
       'Using a power company instead of running your own generator: plug in and pay for what you use, but you depend on the grid.',
     example:
-      'POST https://api.ai-provider.example/v1/messages with header "Authorization: Bearer sk-…" and body {"model": "some-model", "messages": [{"role": "user", "content": "Write a tagline for a bakery"}]}. Response: {"content": "Fresh from our oven to your morning.", "usage": {"input_tokens": 14, "output_tokens": 9}}.',
+      '`POST https://api.ai-provider.example/v1/messages` with header "`Authorization: Bearer sk-…`" and body `{"model": "some-model", "messages": [{"role": "user", "content": "Write a tagline for a bakery"}]}`. Response: `{"content": "Fresh from our oven to your morning.", "usage": {"input_tokens": 14, "output_tokens": 9}}`.',
     whyItMatters:
       'API inference is how most AI features ship: fast to start, always the latest models, scales automatically. Teams must manage API keys securely, handle rate limits and errors, watch per-token costs, and check the provider\'s data-retention policy.',
     misconception:

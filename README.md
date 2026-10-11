@@ -8,7 +8,7 @@ The look borrows from card collecting (NBA Top Shot), shelves and play buttons (
 
 - **Difficulty tiers:** Easy, Medium, Hard, Expert, Super hard — each with its Big-O name on the side (Constant, Logarithmic, Linear, Quadratic, Exponential).
 - **Card status follows Git:** Untracked → Committed (answered right) → In review → Merged (mastered through spaced review).
-- Your collection is your **Repo**, learning tracks are **Modules**, cards have hex addresses (`0x00E/0x0AA`), level-ups are **releases** (`v2.0.0`) with a changelog, and coding challenges are **Drops** you **ship**.
+- Your collection is your **Repo**, learning tracks are **Modules**, cards have hex addresses (`0x00E/0x0AA`), level-ups are **releases** (`v2.0.0`) with a changelog, and the eight hands-on coding **Projects** are things you **ship** — an automated checker tests what your page does, so any working solution passes.
 
 ## What's inside
 
@@ -18,7 +18,7 @@ The look borrows from card collecting (NBA Top Shot), shelves and play buttons (
 | **Spaced repetition** | Leitner boxes (Untracked → Committed → In review → Merged). Due first-try answers promote; misses come back in 10 minutes; answering a card that isn't due is practice (no promotion, no XP). |
 | **XP & levels** | Ledger of individually-keyed XP transactions (no double awards). 7 levels (Curious → Systems Thinker), each gated by XP **and** specific recalled cards **and** shipped drops. Locked cards stay readable as previews with a path to their prerequisites. |
 | **Repo** | Grid of all 170 cards with a difficulty legend, module pages with a tracklist, card pages with the knowledge graph (builds on / connects to / referenced by). |
-| **Build** | 8 Drops: first webpage, CSS, button counter, score tracker, data transform, API (simulated server), mini database (TinySQL), and a full mini app. Mission · Editor · Result panels; tabs on mobile. |
+| **Build** | 8 Projects: first webpage, CSS, button counter, score tracker, data transform, API (simulated server), mini database (TinySQL), and a full mini app. Mission · Editor · Result panels; tabs on mobile. |
 | **Under the hood** | Built only from what really happened: line diff vs. the starter, recorded event trace (listener → event → handler → DOM change, request → response → JSON), matched code patterns with line numbers, CSS rule matches, SQL step-by-step. |
 | **Demo** | `#/demo` — an 8-section guided tour on a separate in-memory profile using the same engine and components: answer, shuffle, earn XP, unlock a (demo) level, write/understand/ship code, explore the curriculum. |
 | **You** | "Wrapped"-style stats, level ladder with "why it's locked", XP history, export / import / reset. |
@@ -74,7 +74,7 @@ Each card defines **key ideas** (each a set of synonym terms), accepted phrasing
 
 **Honest limits:** a sandboxed iframe is strong browser isolation, not an OS container. In browsers that run sandboxed frames in the same process, an endless loop can freeze the tab until the frame is stopped. Learner code shares a JS realm with the bridge, so a determined learner could forge their own check results — acceptable for a self-paced learning tool with local-only XP.
 
-**TinySQL** (Drop 07) is an in-memory interpreter for a real subset of SQL (CREATE, INSERT, SELECT with WHERE/ORDER BY/LIMIT/COUNT, UPDATE, DELETE, LIKE, primary-key uniqueness, type checks, typo suggestions). The UI labels it as a teaching simulator — it has no joins, indexes, transactions or durability.
+**TinySQL** (Project 07) is an in-memory interpreter for a real subset of SQL (CREATE, INSERT, SELECT with WHERE/ORDER BY/LIMIT/COUNT, UPDATE, DELETE, LIKE, primary-key uniqueness, type checks, typo suggestions). The UI labels it as a teaching simulator — it has no joins, indexes, transactions or durability.
 
 ### Persistence
 Progress lives in `localStorage` under `coded.progress` in a versioned envelope `{ app, version, savedAt, state }`. Loading validates and repairs every field, de-duplicates the XP ledger, runs migrations, and on corrupt data keeps a backup and starts fresh with a message. Tabs stay in sync via the `storage` event. Export/import is a JSON file; reset requires typing RESET. Nothing is sent anywhere — and progress does not follow you to another browser or device unless you export it.

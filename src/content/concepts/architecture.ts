@@ -13,7 +13,7 @@ const concepts: Concept[] = [
     analogy:
       'A building’s floor plan: it decides where the kitchen, plumbing and stairs go and how rooms connect. You can repaint a room easily; moving the stairs is a big job. Architecture decisions are the stairs.',
     example:
-      'A typical web app architecture: a React frontend in the browser calls a Node.js backend at https://api.shop.example, which reads and writes a PostgreSQL database and calls Stripe’s API to take payments. Drawn on a whiteboard, that is four boxes and the arrows between them.',
+      'A typical web app architecture: a React frontend in the browser calls a Node.js backend at `https://api.shop.example`, which reads and writes a PostgreSQL database and calls Stripe’s API to take payments. Drawn on a whiteboard, that is four boxes and the arrows between them.',
     whyItMatters:
       'Architecture decides how hard everything else will be — how fast the team can add features, how the system copes with more users, and what breaks when one part fails. When engineers push back with "that would require re-architecting", they mean the change touches the boxes and arrows, not just one screen.',
     misconception:
@@ -133,7 +133,7 @@ const concepts: Concept[] = [
     analogy:
       'A food court instead of one restaurant: each stall has its own kitchen, staff and menu, and can close for renovation without shutting the others. But now you need signage, shared seating and a way to pay across stalls.',
     example:
-      'When you buy something, the `checkout` service sends POST http://payments.internal/charges to the `payments` service, then publishes an "order placed" message that the `email` and `inventory` services react to. Each runs in its own container and can be deployed on its own schedule.',
+      'When you buy something, the `checkout` service sends `POST http://payments.internal/charges` to the `payments` service, then publishes an "order placed" message that the `email` and `inventory` services react to. Each runs in its own container and can be deployed on its own schedule.',
     whyItMatters:
       'Microservices let big organizations (Netflix, Uber, Amazon) have hundreds of teams ship independently. The cost is real: network failures, harder debugging across services, and lots of infrastructure. Understanding the trade-off helps you judge when a team’s plan to adopt them is justified.',
     misconception:
@@ -192,7 +192,7 @@ const concepts: Concept[] = [
     analogy:
       'A dry cleaner on your street: you hand over clothes and a ticket, and later collect them. You don’t know or care how their machines work — you only use the service they offer.',
     example:
-      'An `email-service` runs on its own server and exposes POST /send. The main app calls it with {"to": "ana@example.com", "template": "receipt"}. Third-party services work the same way: Stripe is a payments service, Twilio a text-message service.',
+      'An `email-service` runs on its own server and exposes `POST /send`. The main app calls it with `{"to": "ana@example.com", "template": "receipt"}`. Third-party services work the same way: Stripe is a payments service, Twilio a text-message service.',
     whyItMatters:
       'Products are increasingly assembled from services — your own and other companies’. When someone says "we’ll spin up a service for that", they mean a new independently running program with its own API, its own deployment and its own failure modes.',
     misconception:
@@ -699,7 +699,7 @@ const concepts: Concept[] = [
     analogy:
       'A hotel key card. Everyone at the desk proved who they are, but your card only opens your room, the gym and the pool — not other guests’ rooms or the staff office.',
     example:
-      'User 4821 sends DELETE /projects/77. The server checks: is 4821 an owner or admin of project 77? If only a "viewer", it responds 403 Forbidden. In code: `if (user.role !== "admin") return res.status(403).send("Forbidden")`.',
+      'User 4821 sends `DELETE /projects/77`. The server checks: is 4821 an owner or admin of project 77? If only a "viewer", it responds `403 Forbidden`. In code: `if (user.role !== "admin") return res.status(403).send("Forbidden")`.',
     whyItMatters:
       'Broken authorization — letting users reach other people’s data by changing an ID in the URL — is the #1 risk on the OWASP Top 10 list of web security problems. Product decisions like "managers can approve expenses but not delete them" are authorization rules.',
     misconception:
@@ -874,7 +874,7 @@ const concepts: Concept[] = [
     analogy:
       'A locked safe. Anyone can see the safe, but only someone with the combination can open it and get the original contents back out.',
     example:
-      'HTTPS encrypts traffic between your browser and https://bank.example, so the Wi‑Fi at a café sees only scrambled bytes. A database might store a credit card as AES-256 ciphertext like `u7Fq…==` and decrypt it with a key kept in a secrets manager when needed.',
+      'HTTPS encrypts traffic between your browser and `https://bank.example`, so the Wi‑Fi at a café sees only scrambled bytes. A database might store a credit card as AES-256 ciphertext like `u7Fq…==` and decrypt it with a key kept in a secrets manager when needed.',
     whyItMatters:
       'Encryption protects data "in transit" (moving over networks) and "at rest" (stored on disks and backups). Regulations like GDPR and PCI rely on it, and a stolen laptop or database dump is far less damaging if its contents are encrypted.',
     misconception:
@@ -1046,7 +1046,7 @@ const concepts: Concept[] = [
     analogy:
       'A guest list at a private event: the venue (the server) gives the doorman (the browser) a list of approved guests (origins). Anyone not on the list can knock, but won’t be let in to see what’s inside.',
     example:
-      'Your page at https://app.example runs `fetch("https://api.other.example/data")`. The browser sends `Origin: https://app.example`. Only if the API replies with `Access-Control-Allow-Origin: https://app.example` will your code see the data; otherwise the console shows "blocked by CORS policy".',
+      'Your page at `https://app.example` runs `fetch("https://api.other.example/data")`. The browser sends `Origin: https://app.example`. Only if the API replies with `Access-Control-Allow-Origin: https://app.example` will your code see the data; otherwise the console shows "blocked by CORS policy".',
     whyItMatters:
       'CORS errors are one of the most common things that stop a frontend talking to a backend during development. Knowing the server must send the right header (not the frontend) saves hours of confusion.',
     misconception:

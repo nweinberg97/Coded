@@ -27,7 +27,7 @@ export const DEMO_LEVELS: LevelDef[] = [
     xp: 40,
     concepts: ['api', 'json'],
     challenges: [],
-    unlocks: ['The “Webhook” card (Section 4)', 'Full XP on Drop 03 in the demo'],
+    unlocks: ['The “Webhook” card (Section 4)', 'Full XP on Project 03 in the demo'],
   },
   {
     level: 3,
@@ -155,7 +155,7 @@ function DemoTour() {
             </div>
           </DemoSection>
 
-          <DemoSection n={8} title="Explore the curriculum" lead="Browse the real library: eight modules, seven releases, eight drops.">
+          <DemoSection n={8} title="Explore the curriculum" lead="Browse the real library: eight modules, seven levels, eight coding projects.">
             <CurriculumDemo onExplore={() => setExplored(true)} />
           </DemoSection>
 

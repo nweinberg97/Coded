@@ -2,7 +2,7 @@
   "name": "coded",
   "private": true,
   "version": "1.0.0",
-  "description": "Coded — learn how software works through collectible flashcards, XP and a real coding sandbox.",
+  "description": "Coded — a hands-on course in how software works: concept recall, levels, and real coding projects in a browser sandbox.",
   "type": "module",
   "license": "MIT",
   "scripts": {

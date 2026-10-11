@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Challenge } from '../content/challenges';
 import { CONCEPT_BY_ID, splitTerm } from '../content';
 import { useProgress } from '../app/store';
@@ -36,7 +36,7 @@ export function Workspace({ challenge, embedded = false }: { challenge: Challeng
       </section>
 
       <section className={`ws-panel ws-editor${tab === 'code' ? ' is-shown' : ''}`} aria-label="Code editor">
-        <EditorPanel challenge={challenge} ws={ws} onRunMobile={() => { setTab('result'); setRtab('preview'); }} onShipMobile={() => { setTab('mission'); }} />
+        <EditorPanel challenge={challenge} ws={ws} onRunMobile={() => { setTab('result'); setRtab('preview'); }} />
       </section>
 
       <section className={`ws-panel ws-result${tab === 'result' ? ' is-shown' : ''}`} aria-label="Result">
@@ -84,7 +84,7 @@ function Mission({ challenge, ws, embedded }: { challenge: Challenge; ws: WS; em
   return (
     <div className="mission">
       <div className="mission-drop" style={{ ['--c1' as string]: challenge.colorway[0], ['--c2' as string]: challenge.colorway[1] }}>
-        <span className="mono">DROP {String(challenge.number).padStart(2, '0')}</span>
+        <span className="mono">PROJECT {String(challenge.number).padStart(2, '0')}</span>
         <span className="mission-xp">+{challenge.xp} XP</span>
       </div>
       <h1 className="mission-title">{challenge.title}</h1>
@@ -117,7 +117,7 @@ function Mission({ challenge, ws, embedded }: { challenge: Challenge; ws: WS; em
               <span className="check-dot" aria-hidden>{r ? (r.ok ? <Icon name="check" size={12} /> : <Icon name="x" size={12} />) : null}</span>
               <div>
                 <span>{c.label}</span>
-                {r && !r.ok && <span className="check-hint">{c.hint}{r.detail ? ` (${r.detail})` : ''}</span>}
+                {r && !r.ok && <span className="check-hint">{c.hint}</span>}
               </div>
               <span className="sr-only">{r ? (r.ok ? 'passed' : 'not yet') : 'not checked'}</span>
             </li>
@@ -141,7 +141,7 @@ function Mission({ challenge, ws, embedded }: { challenge: Challenge; ws: WS; em
   );
 }
 
-function EditorPanel({ challenge, ws, onRunMobile, onShipMobile }: { challenge: Challenge; ws: WS; onRunMobile: () => void; onShipMobile: () => void }) {
+function EditorPanel({ challenge, ws, onRunMobile }: { challenge: Challenge; ws: WS; onRunMobile: () => void }) {
   const toast = useToast();
   const [confirmReset, setConfirmReset] = useState(false);
   const checking = ws.ship.phase === 'checking';
@@ -203,7 +203,7 @@ function EditorPanel({ challenge, ws, onRunMobile, onShipMobile }: { challenge: 
         <button className="btn btn-secondary" onClick={() => { ws.run(); onRunMobile(); }} data-testid="run">
           <Icon name="play" size={14} /> Run <Kbd>⌘↵</Kbd>
         </button>
-        <button className="btn btn-primary btn-ship" onClick={() => { ws.shipIt(); onShipMobile(); }} disabled={checking} data-testid="ship">
+        <button className="btn btn-primary btn-ship" onClick={() => ws.shipIt()} disabled={checking} data-testid="ship">
           <Icon name="rocket" size={16} />
           {checking && ws.ship.phase === 'checking' ? `Checking ${ws.ship.done}/${ws.ship.total}…` : 'Ship it'}
         </button>
@@ -214,25 +214,67 @@ function EditorPanel({ challenge, ws, onRunMobile, onShipMobile }: { challenge: 
 }
 
 function ShipResult({ challenge, ws }: { challenge: Challenge; ws: WS }) {
-  if (ws.ship.phase !== 'done') return null;
+  const ref = useRef<HTMLDivElement>(null);
+  const phase = ws.ship.phase;
+  // Bring the result into view (it can sit below the editor on smaller screens).
+  useEffect(() => {
+    if (phase !== 'idle') ref.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [phase]);
+  if (ws.ship.phase === 'idle') return null;
+  if (ws.ship.phase === 'checking') {
+    const { done, total } = ws.ship;
+    return (
+      <div ref={ref} className="ship-result is-checking" role="status" aria-live="polite" data-testid="ship-checking">
+        <div className="ship-spinner" aria-hidden />
+        <div className="ship-body">
+          <strong>Testing your project… {done}/{total} checks</strong>
+          <p className="muted">A robot is using your page in a hidden copy — clicking, typing and reading the result.</p>
+          <div className="ship-progress"><div style={{ width: `${(done / total) * 100}%` }} /></div>
+        </div>
+      </div>
+    );
+  }
   const { results, passed, xp, eligible } = ws.ship;
   const n = results.filter((r) => r.ok).length;
   return (
-    <div className={`ship-result ${passed ? 'is-pass' : 'is-fail'}`} role="status" data-testid="ship-result">
-      {passed ? (
-        <>
-          <div className="ship-stamp">SHIPPED</div>
-          <div>
+    <div ref={ref} className={`ship-result ${passed ? 'is-pass' : 'is-fail'}`} role="status" aria-live="polite" data-testid="ship-result">
+      {passed && <div className="ship-stamp">SHIPPED</div>}
+      <div className="ship-body">
+        {passed ? (
+          <>
             <strong>All {results.length} checks passed.</strong>{' '}
-            {xp > 0 ? <span className="xp-pop">+{xp} XP</span> : eligible ? <span className="muted">XP already earned for this drop.</span> : <span className="muted">Practice run — XP unlocks at Level {challenge.unlockLevel}.</span>}
+            {xp > 0 ? <span className="xp-pop">+{xp} XP</span> : eligible ? <span className="muted">XP already earned for this project.</span> : <span className="muted">Practice run — XP unlocks at Level {challenge.unlockLevel}.</span>}
             <p className="muted">Open “Under the hood” to see exactly what your code did.</p>
-          </div>
-        </>
-      ) : (
-        <div>
-          <strong>{n}/{results.length} checks passing.</strong> Not shipped yet — see the checklist in Mission for what’s missing. No XP is awarded until every check passes.
-        </div>
-      )}
+          </>
+        ) : (
+          <>
+            <strong>Not shipped yet — {n} of {results.length} checks pass.</strong>
+            <p className="muted">Fix the ones marked below and press Ship it again. No XP until every check passes.</p>
+          </>
+        )}
+        <ul className="ship-checks" data-testid="ship-checks">
+          {challenge.checks.map((c) => {
+            const r = results.find((x) => x.id === c.id);
+            const ok = !!r?.ok;
+            return (
+              <li key={c.id} className={ok ? 'ok' : 'fail'}>
+                <span className="check-dot" aria-hidden>{ok ? <Icon name="check" size={12} /> : <Icon name="x" size={12} />}</span>
+                <div>
+                  <span>{c.label}</span>
+                  {!ok && (
+                    <>
+                      <span className="check-hint">{c.hint}</span>
+                      {r?.detail && <span className="check-detail">What the checker saw: {r.detail}</span>}
+                    </>
+                  )}
+                </div>
+                <span className="sr-only">{ok ? 'passed' : 'not yet'}</span>
+              </li>
+            );
+          })}
+        </ul>
+        {!passed && <p className="ship-note"><Icon name="info" size={14} /> Any working solution counts — the checker tests what your page <em>does</em>, not whether your code matches ours.</p>}
+      </div>
     </div>
   );
 }

@@ -157,6 +157,7 @@ export function bridge(config: { runId: string; fault: number | null; lineOffset
 
   /* ---------- simulated network: mockServer + fetch ---------- */
   var routes: Array<{ method: string; path: string; handler: Function }> = [];
+  var pendingFetches = 0;
   (window as any).mockServer = {
     route: function (method: string, path: string, handler: Function) {
       routes.push({ method: String(method).toUpperCase(), path: String(path), handler: handler });
@@ -200,8 +201,10 @@ export function bridge(config: { runId: string; fault: number | null; lineOffset
     var body: unknown = init && init.body;
     if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { /* keep string */ } }
     trace('request', { method: method, url: url, body: body === undefined ? null : clip(safe(body, 1), 200) });
+    pendingFetches++;
     return new Promise(function (resolve) {
       setTimeout(function () {
+        pendingFetches--;
         var status = 404;
         var resBody: unknown = { error: 'No route for ' + method + ' ' + path };
         if (/^https?:\/\//i.test(url)) {
@@ -271,7 +274,16 @@ export function bridge(config: { runId: string; fault: number | null; lineOffset
   };
 
   /* ---------- declarative checks (run on request from parent) ---------- */
-  var sleep = function (ms: number) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  // Yield to the page WITHOUT timers. Browsers throttle setTimeout in hidden or
+  // off-screen frames (often to once per second), which made multi-step checks
+  // time out even when the learner's code was correct. MessageChannel isn't throttled.
+  var yieldTick = function () {
+    return new Promise<void>(function (r) {
+      var ch = new MessageChannel();
+      ch.port1.onmessage = function () { r(); };
+      ch.port2.postMessage(0);
+    });
+  };
   var q = function (sel: string) { return Array.prototype.slice.call(document.querySelectorAll(sel)) as HTMLElement[]; };
   var text = function (el: Element | undefined) { return el ? (el.textContent || '').replace(/\s+/g, ' ').trim() : ''; };
   var snapshots: Record<string, string> = {};
@@ -327,7 +339,7 @@ export function bridge(config: { runId: string; fault: number | null; lineOffset
               if (i >= times) return resolve({ ok: true, detail: 'clicked ' + step.sel + ' ×' + times });
               i++;
               first.click();
-              setTimeout(tick, 60);
+              yieldTick().then(tick);
             };
             return tick();
           }
@@ -355,7 +367,14 @@ export function bridge(config: { runId: string; fault: number | null; lineOffset
             return resolve({ ok: now === snapshots[step.as], detail: 'before: ' + snapshots[step.as] + ', after: ' + now });
           }
           case 'wait':
-            return void setTimeout(function () { resolve({ ok: true, detail: 'waited' }); }, step.ms || 300);
+            // Wait for the simulated server to finish answering (not a fixed sleep).
+            var waitStart = Date.now();
+            var poll = function () {
+              if (pendingFetches === 0 || Date.now() - waitStart > 8000) {
+                yieldTick().then(yieldTick).then(function () { resolve({ ok: true, detail: 'waited for the server' }); });
+              } else setTimeout(poll, 25);
+            };
+            return void setTimeout(poll, 10);
           default:
             return resolve({ ok: false, detail: 'unknown check' });
         }
@@ -377,7 +396,7 @@ export function bridge(config: { runId: string; fault: number | null; lineOffset
       return runStep(step).then(function (r) {
         detail = r.detail;
         if (!r.ok) return send('check-result', { checkId: String(m.checkId), ok: false, detail: r.detail });
-        return sleep(30).then(go);
+        return yieldTick().then(go);
       });
     };
     go();
@@ -385,7 +404,7 @@ export function bridge(config: { runId: string; fault: number | null; lineOffset
 
   var onReady = function () {
     startObserver();
-    setTimeout(function () { send('ready', summarize()); }, 30);
+    yieldTick().then(function () { send('ready', summarize()); });
   };
   if (document.readyState === 'complete') onReady();
   else window.addEventListener('load', onReady);

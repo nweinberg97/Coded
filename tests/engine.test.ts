@@ -53,7 +53,7 @@ test('partial credit names what is missing', () => {
   const r = evaluateAnswer(concept, 'checking your identity');
   assert.equal(r.verdict, 'partial');
   assert.deepEqual(r.missed.map((m) => m.id), ['how']);
-  assert.match(r.message, /a credential/);
+  assert.match(r.message, /missing idea/);
 });
 
 test('curriculum size and shape', () => {

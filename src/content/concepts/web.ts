@@ -62,7 +62,7 @@ const concepts: Concept[] = [
     analogy:
       'The restaurant kitchen and storeroom: hidden from diners, it holds the ingredients (data), follows the recipes (rules) and prepares what was ordered.',
     example:
-      'When you tap “Send” on a Venmo payment, the backend verifies your login token, checks your balance in a database, records the transaction, notifies the recipient and responds { "status": "completed" } to the app.',
+      'When you tap “Send” on a Venmo payment, the backend verifies your login token, checks your balance in a database, records the transaction, notifies the recipient and responds `{ "status": "completed" }` to the app.',
     whyItMatters:
       'Anything that must be trusted — prices, permissions, account balances — has to be enforced on the backend, because users can modify anything that runs on their own device. Backend choices also drive hosting costs and scalability.',
     misconception:
@@ -118,7 +118,7 @@ const concepts: Concept[] = [
     analogy:
       'A chef-owner who can cook in the kitchen and also run the dining room — not necessarily the best at each, but able to deliver the whole meal.',
     example:
-      'Adding a “Save to favourites” heart: a full-stack developer builds the heart button in React, writes a POST /api/favorites endpoint in Node.js, and adds a favorites table in PostgreSQL linking user IDs to product IDs.',
+      'Adding a “Save to favourites” heart: a full-stack developer builds the heart button in React, writes a `POST /api/favorites` endpoint in Node.js, and adds a `favorites` table in PostgreSQL linking user IDs to product IDs.',
     whyItMatters:
       'Small teams and startups lean on full-stack developers because one person can ship a whole feature. Frameworks like Next.js, Rails and Django are popular partly because they make full-stack work easier.',
     misconception:
@@ -171,7 +171,7 @@ const concepts: Concept[] = [
     analogy:
       'The labelled frame of a house: this is a door, this is a window, this is a room. It says what each part is, not what colour it is painted.',
     example:
-      '<h1>Spring Sale</h1>\n<p>Everything is <strong>30% off</strong> until Sunday.</p>\n<a href="https://shop.example.com/sale">Shop now</a>\n<img src="hero.jpg" alt="Woman in a linen jacket">',
+      '`<h1>Spring Sale</h1>`\n`<p>Everything is <strong>30% off</strong> until Sunday.</p>`\n`<a href="https://shop.example.com/sale">Shop now</a>`\n`<img src="hero.jpg" alt="Woman in a linen jacket">`',
     whyItMatters:
       'Every website is HTML underneath. Good HTML — using the right tags for headings, buttons and forms — makes pages accessible to screen readers, understandable to search engines, and easier to style.',
     misconception:
@@ -224,7 +224,7 @@ const concepts: Concept[] = [
     analogy:
       'Paint, furniture and interior design for the house that HTML built. Same rooms, completely different feel.',
     example:
-      'h1 { font-family: Georgia, serif; color: #1a2b4c; }\n.buy-button { background: #22a06b; color: white; padding: 12px 24px; border-radius: 8px; }\n@media (max-width: 600px) { .sidebar { display: none; } }',
+      '`h1 { font-family: Georgia, serif; color: #1a2b4c; }`\n`.buy-button { background: #22a06b; color: white; padding: 12px 24px; border-radius: 8px; }`\n`@media (max-width: 600px) { .sidebar { display: none; } }`',
     whyItMatters:
       'CSS turns plain structured documents into branded, usable products. It also controls layout across screen sizes, so it is central to responsive design and a big part of how “polished” a product feels.',
     misconception:
@@ -273,7 +273,7 @@ const concepts: Concept[] = [
     analogy:
       'The electrical wiring and appliances of the house: flip a switch and a light comes on, press a button and the garage door opens.',
     example:
-      'const button = document.querySelector("#like");\nlet likes = 0;\nbutton.addEventListener("click", () => {\n  likes = likes + 1;\n  button.textContent = `❤️ ${likes}`;\n});',
+      '`const button = document.querySelector("#like");`\n`let likes = 0;`\n`button.addEventListener("click", () => {`\n  `likes = likes + 1;`\n  ``button.textContent = `❤️ ${likes}`;``\n`});`',
     whyItMatters:
       'JavaScript is the only language every browser runs natively, which makes it the most widely used programming language in the world. Almost every interactive web feature — and frameworks like React — are built on it.',
     misconception:
@@ -322,7 +322,7 @@ const concepts: Concept[] = [
     analogy:
       'HTML is the architect’s blueprint; the DOM is the actual building you can walk into and rearrange. Move a wall in the building and the blueprint on paper stays the same.',
     example:
-      'HTML: <ul id="cart"></ul>\nJavaScript:\nconst item = document.createElement("li");\nitem.textContent = "Linen shirt – $49";\ndocument.getElementById("cart").appendChild(item);\nThe cart now shows the item — the DOM changed, the original HTML file did not.',
+      'HTML: `<ul id="cart"></ul>`\nJavaScript:\n`const item = document.createElement("li");`\n`item.textContent = "Linen shirt – $49";`\n`document.getElementById("cart").appendChild(item);`\nThe cart now shows the item — the DOM changed, the original HTML file did not.',
     whyItMatters:
       'Every interactive web feature works by changing the DOM. Frameworks like React exist largely to manage DOM updates efficiently, and the Elements panel in developer tools shows you the live DOM, not the original HTML.',
     misconception:
@@ -379,7 +379,7 @@ const concepts: Concept[] = [
     analogy:
       'A printer turning a document file into ink on paper — or an architect’s plans being turned into a finished, furnished room.',
     example:
-      'Your browser receives <h1 class="title">Hello</h1> and the CSS .title { font-size: 48px; color: navy }. It builds the DOM, calculates that the heading is 1,200 × 58 pixels at the top, and paints navy letters there. In React, `function Greeting() { return <h1>Hello, {name}</h1>; }` “renders” to that heading.',
+      'Your browser receives `<h1 class="title">Hello</h1>` and the CSS `.title { font-size: 48px; color: navy }`. It builds the DOM, calculates that the heading is 1,200 × 58 pixels at the top, and paints navy letters there. In React, `function Greeting() { return <h1>Hello, {name}</h1>; }` “renders” to that heading.',
     whyItMatters:
       'Slow rendering means janky scrolling, layout shifts and poor Core Web Vitals scores, which hurt both users and SEO. Teams also debate where rendering should happen — in the browser (CSR) or on the server (SSR).',
     misconception:
@@ -433,7 +433,7 @@ const concepts: Concept[] = [
     analogy:
       'A doorbell ringing. The ring is the event; deciding to go open the door is your response to it.',
     example:
-      'Typing “a” in a search box fires keydown, input and keyup events. Pressing Enter in a form fires a submit event. Common event names: click, input, change, submit, keydown, scroll, load.',
+      'Typing “a” in a search box fires `keydown`, `input` and `keyup` events. Pressing Enter in a form fires a `submit` event. Common event names: `click`, `input`, `change`, `submit`, `keydown`, `scroll`, `load`.',
     whyItMatters:
       'Interactive software is event-driven: nothing happens until an event occurs. Product analytics (“track when users click Upgrade”) is literally built on capturing events.',
     misconception:
@@ -486,7 +486,7 @@ const concepts: Concept[] = [
     analogy:
       'Instructions taped next to the doorbell: “When the bell rings, check the camera, then open the door.” The bell is the event; the instructions are the handler.',
     example:
-      'document.querySelector("#add-to-cart").addEventListener("click", () => {\n  cartCount += 1;\n  badge.textContent = cartCount;\n});\nIn React the same idea is written <button onClick={addToCart}>Add to cart</button>.',
+      '`document.querySelector("#add-to-cart").addEventListener("click", () => {`\n  `cartCount += 1;`\n  `badge.textContent = cartCount;`\n`});`\nIn React the same idea is written `<button onClick={addToCart}>Add to cart</button>`.',
     whyItMatters:
       'Handlers are where interactive behaviour actually lives. A “button does nothing” bug often means the handler was never attached, is attached to the wrong element, or throws an error.',
     misconception:
@@ -541,7 +541,7 @@ const concepts: Concept[] = [
     analogy:
       'The scoreboard at a game. The score changes as things happen, and the display always shows the current score.',
     example:
-      'In React:\nconst [count, setCount] = useState(0);\n<button onClick={() => setCount(count + 1)}>Clicked {count} times</button>\nEach click updates the count state, and React re-renders the button with the new number.',
+      'In React:\n`const [count, setCount] = useState(0);`\n`<button onClick={() => setCount(count + 1)}>Clicked {count} times</button>`\nEach click updates the `count` state, and React re-renders the button with the new number.',
     whyItMatters:
       'Most frontend bugs are state bugs: the screen shows stale data, two parts of the page disagree, or a refresh loses what you typed. Deciding where state lives (component, URL, server, local storage) is a core design decision.',
     misconception:
@@ -598,7 +598,7 @@ const concepts: Concept[] = [
     analogy:
       'LEGO bricks. Each brick is designed once, then snapped together in different combinations to build anything.',
     example:
-      'function ProductCard({ name, price, image }) {\n  return (\n    <div className="card">\n      <img src={image} alt={name} />\n      <h3>{name}</h3>\n      <p>${price}</p>\n    </div>\n  );\n}\n// Used as: <ProductCard name="Linen shirt" price={49} image="/shirt.jpg" />',
+      '`function ProductCard({ name, price, image }) {`\n  `return (`\n    `<div className="card">`\n      `<img src={image} alt={name} />`\n      `<h3>{name}</h3>`\n      `<p>${price}</p>`\n    `</div>`\n  `);`\n`}`\n`// Used as: <ProductCard name="Linen shirt" price={49} image="/shirt.jpg" />`',
     whyItMatters:
       'Components let teams build consistent interfaces quickly: fix a bug in the Button component and every button is fixed. Design systems (like Material UI or a company’s own library) are collections of shared components.',
     misconception:
@@ -653,7 +653,7 @@ const concepts: Concept[] = [
     analogy:
       'Water taking the shape of whatever glass you pour it into — same content, reshaped to the container.',
     example:
-      '.products { display: grid; grid-template-columns: repeat(3, 1fr); }\n@media (max-width: 640px) {\n  .products { grid-template-columns: 1fr; }\n}\nOn screens narrower than 640px, the three-column product grid becomes a single column.',
+      '`.products { display: grid; grid-template-columns: repeat(3, 1fr); }`\n`@media (max-width: 640px) {`\n  `.products { grid-template-columns: 1fr; }`\n`}`\nOn screens narrower than 640px, the three-column product grid becomes a single column.',
     whyItMatters:
       'Well over half of web traffic is mobile. A site that requires pinching and sideways scrolling loses users, and Google ranks mobile-friendly pages higher. “Mobile-first” design starts from the smallest screen and expands.',
     misconception:
@@ -708,7 +708,7 @@ const concepts: Concept[] = [
     analogy:
       'A building with ramps, lifts, braille signs and wide doors — usable by everyone, and often nicer for everyone too (think of pushing a stroller up a ramp).',
     example:
-      '<img src="chart.png" alt="Revenue grew from $2M in 2024 to $5M in 2025">\n<button aria-label="Close dialog">✕</button>\n<label for="email">Email</label> <input id="email" type="email">\nA screen reader can now describe the chart, announce the close button, and tell users what the input is for.',
+      '`<img src="chart.png" alt="Revenue grew from $2M in 2024 to $5M in 2025">`\n`<button aria-label="Close dialog">✕</button>`\n`<label for="email">Email</label> <input id="email" type="email">`\nA screen reader can now describe the chart, announce the close button, and tell users what the input is for.',
     whyItMatters:
       'Around 1 in 6 people live with a disability. Accessibility is often a legal requirement (ADA in the US, the European Accessibility Act, WCAG standards), and accessible products are usually clearer and easier for everyone.',
     misconception:
@@ -762,7 +762,7 @@ const concepts: Concept[] = [
     analogy:
       'A building directory in a lobby: “Suite 400 → Accounting, Suite 410 → Legal.” You give it an address; it tells you where to go.',
     example:
-      'Express (backend):\napp.get("/users/:id", (req, res) => res.json(getUser(req.params.id)));\nReact Router (frontend):\n<Route path="/settings/billing" element={<BillingPage />} />\nVisiting /users/42 runs the first handler with id = 42.',
+      'Express (backend):\n`app.get("/users/:id", (req, res) => res.json(getUser(req.params.id)));`\nReact Router (frontend):\n`<Route path="/settings/billing" element={<BillingPage />} />`\nVisiting `/users/42` runs the first handler with `id = 42`.',
     whyItMatters:
       'Routing determines your app’s URLs — whether a link can be shared, bookmarked, tracked in analytics or indexed by Google. “Deep linking” to a specific screen only works if routing is designed for it.',
     misconception:
@@ -816,7 +816,7 @@ const concepts: Concept[] = [
     analogy:
       'A clerk who glances over your paperwork before accepting it: “You forgot to sign here, and this date is in the wrong format.”',
     example:
-      '<input type="email" required minlength="5">\nJavaScript: if (password.length < 8) showError("Password must be at least 8 characters");\nServer: if (!isValidEmail(body.email)) return res.status(400).json({ error: "Invalid email" });',
+      '`<input type="email" required minlength="5">`\nJavaScript: `if (password.length < 8) showError("Password must be at least 8 characters");`\nServer: `if (!isValidEmail(body.email)) return res.status(400).json({ error: "Invalid email" });`',
     whyItMatters:
       'Good validation reduces frustration and support tickets (clear, inline messages) and protects data quality. Server-side validation is also a security requirement — never trust input just because the frontend checked it.',
     misconception:
@@ -872,7 +872,7 @@ const concepts: Concept[] = [
     analogy:
       'Flat-pack furniture: you receive the parts and instructions, and assemble it yourself at home. Slower to get started, but easy to rearrange afterwards.',
     example:
-      'A classic Create React App or Vite site sends:\n<body><div id="root"></div><script src="/assets/index-8f3a.js"></script></body>\nThe script then calls fetch("/api/projects") and renders the dashboard in the browser.',
+      'A classic Create React App or Vite site sends:\n`<body><div id="root"></div><script src="/assets/index-8f3a.js"></script></body>`\nThe script then calls `fetch("/api/projects")` and renders the dashboard in the browser.',
     whyItMatters:
       'CSR suits highly interactive apps behind a login (dashboards, editors like Figma). The trade-offs: a slower first load, a blank screen on slow devices, and weaker SEO because crawlers may see an empty page.',
     misconception:
@@ -920,7 +920,7 @@ const concepts: Concept[] = [
     analogy:
       'Furniture delivered fully assembled. It takes the shop a bit more work, but you can sit on it the moment it arrives.',
     example:
-      'Requesting https://news.example.com/articles/42 returns:\n<article><h1>City council approves new bike lanes</h1><p>The vote passed 7–2…</p></article>\nThe headline is in the HTML itself. Frameworks like Next.js, Remix, Rails and Django render pages this way.',
+      'Requesting `https://news.example.com/articles/42` returns:\n`<article><h1>City council approves new bike lanes</h1><p>The vote passed 7–2…</p></article>`\nThe headline is in the HTML itself. Frameworks like Next.js, Remix, Rails and Django render pages this way.',
     whyItMatters:
       'SSR gives faster first paint and reliable SEO — important for marketing sites, e-commerce and content. The cost is more work on your servers per request, which is why some pages are pre-rendered at build time instead (static site generation).',
     misconception:
@@ -970,7 +970,7 @@ const concepts: Concept[] = [
     analogy:
       'The diagnostic port on a car: plug in and see error codes, and even send test commands, without opening the engine.',
     example:
-      'Code writes console.log("cart total:", total) → the console shows “cart total: 129.5”.\nA bug shows in red: “Uncaught TypeError: Cannot read properties of undefined (reading \'price\') at checkout.js:42”.\nTyping document.querySelectorAll("img").length returns 37.',
+      'Code writes `console.log("cart total:", total)` → the console shows “`cart total: 129.5`”.\nA bug shows in red: “`Uncaught TypeError: Cannot read properties of undefined (reading \'price\') at checkout.js:42`”.\nTyping `document.querySelectorAll("img").length` returns 37.',
     whyItMatters:
       'When something “doesn’t work” on a website, the console is the first place to look. Pasting the red error text into a bug report saves engineers huge amounts of time.',
     misconception:
@@ -1025,7 +1025,7 @@ const concepts: Concept[] = [
     analogy:
       'An X-ray machine plus a mechanic’s toolbox for web pages: see inside, test changes, find what is broken.',
     example:
-      'In Chrome DevTools: the Elements panel lets you change a button’s colour live; the Network panel shows GET /api/orders → 500 Internal Server Error taking 2.3s; the Lighthouse panel scores the page for performance and accessibility; device mode previews it at iPhone size.',
+      'In Chrome DevTools: the Elements panel lets you change a button’s colour live; the Network panel shows `GET /api/orders` → `500 Internal Server Error` taking 2.3s; the Lighthouse panel scores the page for performance and accessibility; device mode previews it at iPhone size.',
     whyItMatters:
       'DevTools is the main way engineers debug the frontend, and they are useful for non-engineers too: checking which request failed, testing copy changes, or previewing mobile layouts before filing a ticket.',
     misconception:

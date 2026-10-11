@@ -12,9 +12,9 @@ export function BuildPage() {
     <div className="page">
       <header className="build-hero">
         <div className="eyebrow">Build</div>
-        <h1 className="h-display">Drops</h1>
+        <h1 className="h-display">Projects</h1>
         <p className="lede">
-          Eight hands-on experiments. Real code, a real browser sandbox, and an automated checker that only lets you ship when it actually works.
+          Eight hands-on coding projects. Write real code, press <strong>Run</strong> to see it work, then <strong>Ship it</strong> — an automated checker tests what your page actually does before you earn XP. There’s always more than one way to solve each one.
         </p>
         <div className="build-meta mono">{shipped}/{CHALLENGES.length} SHIPPED</div>
       </header>
@@ -32,7 +32,7 @@ export function BuildPage() {
               </div>
               <div className="drop-info">
                 <div className="drop-row">
-                  <span className="mono drop-label">DROP {String(c.number).padStart(2, '0')}</span>
+                  <span className="mono drop-label">PROJECT {String(c.number).padStart(2, '0')}</span>
                   <span className="drop-xp">+{c.xp} XP</span>
                 </div>
                 <h2 className="drop-title">{c.title}</h2>
@@ -65,13 +65,13 @@ export function BuildPage() {
 
 export function ChallengePage({ id }: { id: string }) {
   const ch = CHALLENGE_BY_ID[id];
-  if (!ch) return <div className="page"><EmptyState title="Drop not found" action={<Link className="btn btn-primary" to="/build">All drops</Link>} /></div>;
+  if (!ch) return <div className="page"><EmptyState title="Project not found" action={<Link className="btn btn-primary" to="/build">All projects</Link>} /></div>;
   const idx = ch.number;
   const next = Object.values(CHALLENGE_BY_ID).find((c) => c.number === idx + 1);
   return (
     <div className="page page-wide">
       <nav className="crumbs" aria-label="Breadcrumb">
-        <Link to="/build">Drops</Link> <span>/</span> <span aria-current="page">Drop {String(ch.number).padStart(2, '0')} · {ch.title}</span>
+        <Link to="/build">Projects</Link> <span>/</span> <span aria-current="page">Project {String(ch.number).padStart(2, '0')} · {ch.title}</span>
         {next && (
           <Link className="crumbs-next" to={`/build/${next.id}`}>
             Next: {next.title} <Icon name="right" size={14} />

@@ -144,11 +144,6 @@ export function requiredIdeas(concept: Pick<Concept, 'keyIdeas' | 'minKeyIdeas'>
   return Math.min(concept.keyIdeas.length, concept.minKeyIdeas ?? concept.keyIdeas.length);
 }
 
-function list(labels: string[]): string {
-  if (labels.length <= 1) return labels.join('');
-  return labels.slice(0, -1).join(', ') + ' and ' + labels[labels.length - 1];
-}
-
 export function evaluateAnswer(
   concept: Pick<Concept, 'keyIdeas' | 'minKeyIdeas' | 'acceptedAnswers' | 'wrongIdeas'>,
   rawAnswer: string,
@@ -194,10 +189,7 @@ export function evaluateAnswer(
       hit,
       missed: [],
       matchedAccepted,
-      message:
-        hit.length > 0
-          ? `Nailed it — you captured ${list(hit.map((h) => h.label))}.`
-          : 'Nailed it — that matches an accepted answer.',
+      message: 'Correct.',
     };
   }
 
@@ -207,9 +199,7 @@ export function evaluateAnswer(
       hit,
       missed,
       matchedAccepted: false,
-      message: `Close. You got ${list(hit.map((h) => h.label))}, but the answer also needs ${list(
-        missed.slice(0, needed - hit.length + 1).map((m) => m.label),
-      )}.`,
+      message: 'Your answer has part of it. Add the missing idea below and check again.',
     };
   }
 
@@ -218,6 +208,6 @@ export function evaluateAnswer(
     hit: [],
     missed,
     matchedAccepted: false,
-    message: 'Not quite yet — that answer doesn’t touch the core idea. Try the hint.',
+    message: 'Your answer doesn’t include the key idea yet. Try rephrasing, or use the hint.',
   };
 }

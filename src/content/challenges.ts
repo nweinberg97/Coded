@@ -222,8 +222,8 @@ export const CHALLENGES: Challenge[] = [
 </script>
 `,
     checks: [
-      { id: 'listener', kind: 'source', label: 'A click listener is registered', hint: 'Keep the addEventListener("click", …) line.', test: (c) => /addEventListener\(\s*["'`]click["'`]/.test(stripComments(c)) },
-      { id: 'counts', kind: 'runtime', label: 'Three clicks show “3”', hint: 'Increase count inside the handler, then set button.textContent.', steps: [{ op: 'click', sel: '#counter', times: 3 }, { op: 'text', sel: '#counter', re: '\\b3\\b' }] },
+      { id: 'listener', kind: 'source', label: 'The button listens for clicks', hint: 'Keep a click handler on the button — addEventListener("click", …) or onclick both work.', test: (c) => /addEventListener\(\s*["'`]click["'`]|\.onclick\s*=|onclick\s*=/i.test(stripComments(c)) },
+      { id: 'counts', kind: 'runtime', label: 'Three clicks show “3”', hint: 'Each click should add 1 to the count and update the button’s text.', steps: [{ op: 'click', sel: '#counter', times: 3 }, { op: 'text', sel: '#counter', re: '\\b3\\b' }] },
       { id: 'label', kind: 'runtime', label: 'The label still reads “… times”', hint: 'Use a template string like `Clicked ${count} times`.', steps: [{ op: 'text', sel: '#counter', re: 'times?' }] },
     ],
     flow: {
@@ -292,10 +292,10 @@ export const CHALLENGES: Challenge[] = [
 `,
     checks: [
       { id: 'five', kind: 'runtime', label: 'Five clicks → score shows 5', hint: 'The +1 handler already works — keep it.', steps: [{ op: 'click', sel: '#plus', times: 5 }, { op: 'text', sel: '#score', re: '^5$' }] },
-      { id: 'win', kind: 'runtime', label: 'Hitting the target shows a message', hint: 'Use if (score >= TARGET) { … } to set #message text.', steps: [{ op: 'text', sel: '#message', re: '\\S' }] },
-      { id: 'reset', kind: 'runtime', label: 'Reset puts the score back to 0', hint: 'In the reset handler: score = 0; render();', steps: [{ op: 'click', sel: '#reset' }, { op: 'text', sel: '#score', re: '^0$' }] },
+      { id: 'win', kind: 'runtime', label: 'Hitting the target shows a message', hint: 'When the score reaches TARGET, put any message into #message (an if statement is the usual way).', steps: [{ op: 'text', sel: '#message', re: '\\S' }] },
+      { id: 'reset', kind: 'runtime', label: 'Reset puts the score back to 0', hint: 'The Reset button should set the score back to 0 and redraw it.', steps: [{ op: 'click', sel: '#reset' }, { op: 'text', sel: '#score', re: '^0$' }] },
       { id: 'clear', kind: 'runtime', label: 'Reset clears the message', hint: 'Set the message’s textContent to "" in reset.', steps: [{ op: 'text', sel: '#message', re: '^$' }] },
-      { id: 'if', kind: 'source', label: 'Uses an if statement', hint: 'The celebration should only happen when a condition is true.', test: (c) => /\bif\s*\(/.test(stripComments(c)) },
+      { id: 'if', kind: 'source', label: 'Uses a condition', hint: 'The celebration should only happen when a condition is true — an if statement, or a ? : expression.', test: (c) => /\bif\s*\(|\?[^:;\n]+:/.test(stripComments(c)) },
     ],
     flow: {
       title: 'State drives the screen',
@@ -367,11 +367,11 @@ export const CHALLENGES: Challenge[] = [
 </script>
 `,
     checks: [
-      { id: 'six', kind: 'source', label: 'The array has 6+ sneakers', hint: 'Add another { name: …, price: …, brand: … }, line.', test: (c) => count(stripComments(c), /\bname\s*:/g) >= 6 },
-      { id: 'filter', kind: 'source', label: 'Uses .filter()', hint: 'sneakers.filter((s) => s.price < 200)', test: (c) => /\.filter\s*\(/.test(stripComments(c)) },
-      { id: 'under', kind: 'runtime', label: 'Every listed price is under $200', hint: 'Your filter should keep only price < 200.', steps: [{ op: 'numbers', sel: '#list li', max: 200 }] },
+      { id: 'six', kind: 'source', label: 'The array has 6+ sneakers', hint: 'Add another { name: …, price: …, brand: … }, line.', test: (c) => count(stripComments(c), /["']?\bname["']?\s*:/g) >= 6 },
+      { id: 'filter', kind: 'source', label: 'Filters the list in code', hint: 'Keep only the cheaper sneakers — .filter() is the classic way, but a loop with an if works too.', test: (c) => { const s = stripComments(c); return /\.filter\s*\(/.test(s) || (/\bfor\b|\.forEach\s*\(/.test(s) && /\bif\s*\(/.test(s)); } },
+      { id: 'under', kind: 'runtime', label: 'Every listed price is under $200', hint: 'Only sneakers cheaper than $200 should end up in the list.', steps: [{ op: 'numbers', sel: '#list li', max: 200 }] },
       { id: 'some', kind: 'runtime', label: 'At least 3 drops are listed', hint: 'Make sure the loop uses the filtered array.', steps: [{ op: 'count', sel: '#list li', cmp: '>=', n: 3 }] },
-      { id: 'summary', kind: 'runtime', label: 'Summary says how many', hint: 'Set #summary text to `${affordable.length} drops`.', steps: [{ op: 'text', sel: '#summary', re: '\\d+\\s*(drops?|sneakers?|items?|pairs?)' }] },
+      { id: 'summary', kind: 'runtime', label: 'Summary says how many', hint: 'Show a count in #summary, like “4 drops” (the array’s .length gives you the number).', steps: [{ op: 'text', sel: '#summary', re: '\\d+\\s*(drops?|sneakers?|items?|pairs?)' }] },
     ],
     flow: {
       title: 'Data in, interface out',
@@ -447,9 +447,9 @@ export const CHALLENGES: Challenge[] = [
 `,
     checks: [
       { id: 'four', kind: 'runtime', label: 'The API returns 4+ drops', hint: 'Add another object inside the body: [ … ] array.', steps: [{ op: 'wait', ms: 450 }, { op: 'count', sel: '#drops li', cmp: '>=', n: 4 }] },
-      { id: 'price', kind: 'runtime', label: 'Each drop shows its price', hint: 'li.textContent = drop.name + " — $" + drop.price;', steps: [{ op: 'wait', ms: 450 }, { op: 'everyText', sel: '#drops li', re: '\\$\\s?\\d+' }] },
-      { id: 'ok', kind: 'source', label: 'Checks response.ok (or the status)', hint: 'if (!response.ok) { … }', test: (c) => /response\.(ok|status\s*(!==?|===?|>=?|<=?))/.test(stripComments(c).replace(/"Status " \+ response\.status/g, '')) },
-      { id: 'fault', kind: 'runtime', fault: 404, label: 'A 404 shows a friendly error', hint: 'When !response.ok, put a message like “Couldn’t load drops” in #status.', steps: [{ op: 'wait', ms: 450 }, { op: 'text', sel: '#status', re: "couldn|could not|can.?t|error|fail|wrong|unavailable|not found|oops|try again" }] },
+      { id: 'price', kind: 'runtime', label: 'Each drop shows its price', hint: 'Each list item should include the price with a $ sign, e.g. “Air Byte 1 — $120”.', steps: [{ op: 'wait', ms: 450 }, { op: 'everyText', sel: '#drops li', re: '\\$\\s?\\d+' }] },
+      { id: 'ok', kind: 'source', label: 'Checks whether the request succeeded', hint: 'Look at response.ok (or compare response.status) before using the data.', test: (c) => /\.ok\b|\.status\s*(!==?|===?|>=?|<=?)/.test(stripComments(c).replace(/"Status " \+ response\.status/g, '')) },
+      { id: 'fault', kind: 'runtime', fault: 404, label: 'A 404 shows a friendly error', hint: 'When the server answers with an error, show a friendly message (like “Couldn’t load drops”) in #status.', steps: [{ op: 'wait', ms: 450 }, { op: 'text', sel: '#status', re: "couldn|could not|can.?t|error|fail|wrong|unavailable|not found|oops|try again" }] },
     ],
     flow: {
       title: 'The life of an API call',
@@ -559,13 +559,13 @@ SELECT * FROM sneakers;
     goal: 'Finish a “grail list” app: add items, validate empty input, show a live count, and clear the box.',
     why: 'This is the architecture of real apps in miniature: state holds the truth, render() draws it, events change it, and validation protects it.',
     steps: [
-      'In addItem: if value is empty, put “Type something first” in #error and return.',
+      'In addItem: if the input is empty, show a message like “Type something first” in #error and stop (return) so nothing gets added.',
       'In render: update #count, e.g. `${items.length} items`.',
       'After adding: clear the input (input.value = "") and the error text.',
       'Run it, use it, then Ship — the checker will use your app like a real user.',
     ],
     hints: [
-      'Validation:\nif (value === "") {\n  document.getElementById("error").textContent = "Type something first";\n  return;\n}',
+      'One way to validate (there are many):\nif (value === "") {\n  document.getElementById("error").textContent = "Type something first";\n  return;\n}',
       'Count: document.getElementById("count").textContent = items.length + " items";\nClear: input.value = ""; document.getElementById("error").textContent = "";',
     ],
     starter: `<style>
@@ -619,9 +619,9 @@ SELECT * FROM sneakers;
 `,
     checks: [
       { id: 'add', kind: 'runtime', label: 'Adding an item shows it in the list', hint: 'items.push(value) then render() — already in the starter.', steps: [{ op: 'input', sel: '#item', value: 'Air Byte 1' }, { op: 'click', sel: '#add' }, { op: 'count', sel: '#list li', cmp: '==', n: 1 }, { op: 'text', sel: '#list li', re: 'Air Byte 1' }] },
-      { id: 'count', kind: 'runtime', label: 'The count updates (“1 item”)', hint: 'Set #count text in render() using items.length.', steps: [{ op: 'text', sel: '#count', re: '^1 items?$' }] },
-      { id: 'clear', kind: 'runtime', label: 'The input clears after adding', hint: 'input.value = "";', steps: [{ op: 'value', sel: '#item', equals: '' }] },
-      { id: 'empty', kind: 'runtime', label: 'Empty input is rejected with a message', hint: 'Check if value === "" → show #error text and return before pushing.', steps: [{ op: 'snapshot', sel: '#list li', as: 'n', count: true }, { op: 'input', sel: '#item', value: '   ' }, { op: 'click', sel: '#add' }, { op: 'unchanged', sel: '#list li', as: 'n', count: true }, { op: 'text', sel: '#error', re: '\\S' }] },
+      { id: 'count', kind: 'runtime', label: 'The count updates (“1 item”)', hint: 'After every change, show how many items there are in #count (items.length).', steps: [{ op: 'text', sel: '#count', re: '^1 items?$' }] },
+      { id: 'clear', kind: 'runtime', label: 'The input clears after adding', hint: 'After adding, empty the text box (input.value = "").', steps: [{ op: 'value', sel: '#item', equals: '' }] },
+      { id: 'empty', kind: 'runtime', label: 'Empty input is rejected with a message', hint: 'When the box is empty (or only spaces), show a message in #error and stop before adding. Any check works: value === "", !value, value.length < 1, or a regex like /^\\s*$/.test(value).', steps: [{ op: 'snapshot', sel: '#list li', as: 'n', count: true }, { op: 'input', sel: '#item', value: '   ' }, { op: 'click', sel: '#add' }, { op: 'unchanged', sel: '#list li', as: 'n', count: true }, { op: 'text', sel: '#error', re: '\\S' }] },
       { id: 'enter', kind: 'runtime', label: 'Pressing Enter adds too', hint: 'The keydown listener calls addItem when e.key === "Enter".', steps: [{ op: 'input', sel: '#item', value: 'Loop Racer' }, { op: 'key', sel: '#item', key: 'Enter' }, { op: 'count', sel: '#list li', cmp: '==', n: 2 }] },
       { id: 'errclear', kind: 'runtime', label: 'The error clears after a valid add', hint: 'Set #error textContent to "" after a successful add.', steps: [{ op: 'text', sel: '#error', re: '^$' }] },
     ],

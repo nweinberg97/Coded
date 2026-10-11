@@ -13,7 +13,7 @@ const concepts: Concept[] = [
     analogy:
       'A library’s catalogued shelves rather than a pile of books on the floor: everything has a place, so finding one book among a million is fast.',
     example:
-      'When you log in to Spotify, the app asks its database for the row where email = "you@example.com", checks your password hash, then loads your playlists — all stored data that survives server restarts.',
+      'When you log in to Spotify, the app asks its database for the row where `email = "you@example.com"`, checks your password hash, then loads your playlists — all stored data that survives server restarts.',
     whyItMatters:
       'The database is usually the most valuable and most fragile part of a product: code can be rewritten, but lost or corrupted customer data often can’t be recovered. Backups, migrations and access rules all revolve around it.',
     misconception:
@@ -57,7 +57,7 @@ const concepts: Concept[] = [
     analogy:
       'The librarian, not the books. The books are the data; the librarian files them, fetches what you ask for, and stops two people grabbing the same book at once.',
     example:
-      'Your app sends the text SELECT * FROM orders WHERE customer_id = 7; to PostgreSQL (the DBMS) over a network connection. PostgreSQL figures out the fastest way to find those rows, reads them from disk and sends back the results.',
+      'Your app sends the text `SELECT * FROM orders WHERE customer_id = 7;` to PostgreSQL (the DBMS) over a network connection. PostgreSQL figures out the fastest way to find those rows, reads them from disk and sends back the results.',
     whyItMatters:
       'Choosing a DBMS is one of the longest-lasting technical decisions a team makes — it affects cost, scaling, hosting, hiring and what queries are easy. “We’re on Postgres” tells an engineer a lot about a company.',
     misconception:
@@ -107,7 +107,7 @@ const concepts: Concept[] = [
     analogy:
       'One tab in a spreadsheet file. The file is the database; each tab (“Customers”, “Invoices”) is a table.',
     example:
-      'users\n| id | name  | email           |\n| 1  | Ana   | ana@example.com |\n| 2  | Kofi  | kofi@example.com|\nCreated with: CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT UNIQUE);',
+      '`users`\n`| id | name  | email           |`\n`| 1  | Ana   | ana@example.com |`\n`| 2  | Kofi  | kofi@example.com|`\nCreated with: `CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT UNIQUE);`',
     whyItMatters:
       'How data is split into tables decides what questions are easy to answer. A product with “orders” and “customers” as separate tables can easily ask “which customers ordered twice this month?”.',
     misconception:
@@ -159,7 +159,7 @@ const concepts: Concept[] = [
     analogy:
       'One filled-in index card in a box of cards. The box is the table; every card has the same fields.',
     example:
-      'INSERT INTO users (id, name, email) VALUES (42, \'Ana\', \'ana@example.com\');\nThat creates one row: | 42 | Ana | ana@example.com |',
+      '`INSERT INTO users (id, name, email) VALUES (42, \'Ana\', \'ana@example.com\');`\nThat creates one row: `| 42 | Ana | ana@example.com |`',
     whyItMatters:
       'Row counts are how teams talk about scale (“the events table has 2 billion rows”) and often how databases are priced. Understanding a row = one record helps when reading any dashboard or data export.',
     misconception:
@@ -203,7 +203,7 @@ const concepts: Concept[] = [
     analogy:
       'A labelled field on a paper form (“Date of birth: ___”). Every copy of the form has that field; each person fills in their own value.',
     example:
-      'CREATE TABLE products (\n  id INTEGER PRIMARY KEY,\n  name TEXT NOT NULL,\n  price_cents INTEGER,\n  in_stock BOOLEAN DEFAULT true\n);\nFour columns, each with a type and optional rules.',
+      '`CREATE TABLE products (`\n  `id INTEGER PRIMARY KEY,`\n  `name TEXT NOT NULL,`\n  `price_cents INTEGER,`\n  `in_stock BOOLEAN DEFAULT true`\n`);`\nFour columns, each with a type and optional rules.',
     whyItMatters:
       'Adding a column is how product features get new data (“we need to store a phone number”). Column types and rules (NOT NULL, UNIQUE) are the first line of defence against bad data.',
     misconception:
@@ -246,7 +246,7 @@ const concepts: Concept[] = [
     analogy:
       'An architect’s floor plan. It defines rooms, doors and sizes — not the furniture or people that later fill the building.',
     example:
-      'CREATE TABLE orders (\n  id SERIAL PRIMARY KEY,\n  user_id INTEGER NOT NULL REFERENCES users(id),\n  total_cents INTEGER CHECK (total_cents >= 0),\n  created_at TIMESTAMP DEFAULT now()\n);\nThis statement is part of the schema.',
+      '`CREATE TABLE orders (`\n  `id SERIAL PRIMARY KEY,`\n  `user_id INTEGER NOT NULL REFERENCES users(id),`\n  `total_cents INTEGER CHECK (total_cents >= 0),`\n  `created_at TIMESTAMP DEFAULT now()`\n`);`\nThis statement is part of the schema.',
     whyItMatters:
       'The schema is a shared contract between every part of a system. Changing it — renaming a column, splitting a table — can break code across the company, which is why schema changes go through migrations and review.',
     misconception:
@@ -289,7 +289,7 @@ const concepts: Concept[] = [
     analogy:
       'A precise request form for a librarian: “all books by Le Guin, published before 1975, sorted by title.” You say what, not how.',
     example:
-      'SELECT name, email\nFROM users\nWHERE country = \'CA\'\nORDER BY created_at DESC\nLIMIT 10;\n\nUPDATE users SET plan = \'pro\' WHERE id = 42;',
+      '`SELECT name, email`\n`FROM users`\n`WHERE country = \'CA\'`\n`ORDER BY created_at DESC`\n`LIMIT 10;`\n\n`UPDATE users SET plan = \'pro\' WHERE id = 42;`',
     whyItMatters:
       'SQL is one of the most useful technical skills outside engineering — analysts, PMs and marketers use it to answer their own questions instead of waiting on a data team. It has been the standard for 50 years and is everywhere.',
     misconception:
@@ -334,7 +334,7 @@ const concepts: Concept[] = [
     analogy:
       'One question to a librarian. SQL is the language you speak; a query is the particular sentence you say.',
     example:
-      'SELECT id, total_cents, created_at\nFROM orders\nWHERE user_id = 42\nORDER BY created_at DESC\nLIMIT 5;\nReturns five rows — this user’s most recent orders.',
+      '`SELECT id, total_cents, created_at`\n`FROM orders`\n`WHERE user_id = 42`\n`ORDER BY created_at DESC`\n`LIMIT 5;`\nReturns five rows — this user’s most recent orders.',
     whyItMatters:
       'Slow pages are very often caused by slow or too many queries. “This query takes 4 seconds” or “we have an N+1 query problem” are some of the most common performance diagnoses.',
     misconception:
@@ -386,7 +386,7 @@ const concepts: Concept[] = [
     analogy:
       'A passport number: many people are called “Maria Garcia”, but only one person has passport X1234567.',
     example:
-      'CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT, email TEXT);\nSELECT name FROM users WHERE id = 42;  -- always returns at most one row\nInserting a second row with id 42 fails with a “duplicate key” error.',
+      '`CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT, email TEXT);`\n`SELECT name FROM users WHERE id = 42;  -- always returns at most one row`\nInserting a second row with id 42 fails with a “duplicate key” error.',
     whyItMatters:
       'Every update, delete and link between tables relies on primary keys. Using something that can change or repeat (like an email or a name) as the identifier causes painful bugs when it does.',
     misconception:
@@ -437,7 +437,7 @@ const concepts: Concept[] = [
     analogy:
       'A library loan slip with a member number on it. The slip doesn’t repeat your name and address; it points to your record in the members list.',
     example:
-      'CREATE TABLE orders (\n  id SERIAL PRIMARY KEY,\n  user_id INTEGER REFERENCES users(id),\n  total_cents INTEGER\n);\nINSERT INTO orders (user_id, total_cents) VALUES (9999, 500);  -- fails if no user 9999',
+      '`CREATE TABLE orders (`\n  `id SERIAL PRIMARY KEY,`\n  `user_id INTEGER REFERENCES users(id),`\n  `total_cents INTEGER`\n`);`\n`INSERT INTO orders (user_id, total_cents) VALUES (9999, 500);  -- fails if no user 9999`',
     whyItMatters:
       'Foreign keys keep data consistent: no orphaned orders, no comments on deleted posts. They’re also how you answer cross-table questions (“total spent per customer”) with a JOIN.',
     misconception:
@@ -488,7 +488,7 @@ const concepts: Concept[] = [
     analogy:
       'A family tree. Each person is listed once, and the lines between them show who is related to whom and how.',
     example:
-      'One-to-many: one user → many orders (orders.user_id).\nMany-to-many: orders ↔ products via a join table order_items(order_id, product_id, quantity).\nSELECT u.name, o.id FROM users u JOIN orders o ON o.user_id = u.id;',
+      'One-to-many: one user → many orders (`orders.user_id`).\nMany-to-many: orders ↔ products via a join table `order_items(order_id, product_id, quantity)`.\n`SELECT u.name, o.id FROM users u JOIN orders o ON o.user_id = u.id;`',
     whyItMatters:
       'Getting relationships right early saves pain later. If you assume “one address per customer” and the business needs several, you face a costly migration. Product questions like “can a user belong to multiple teams?” are relationship questions.',
     misconception:
@@ -527,7 +527,7 @@ const concepts: Concept[] = [
     analogy:
       'A contacts book: add a contact, look someone up, change their number, cross them out.',
     example:
-      'Create — POST /tasks → INSERT INTO tasks …\nRead — GET /tasks/7 → SELECT * FROM tasks WHERE id = 7\nUpdate — PATCH /tasks/7 → UPDATE tasks SET done = true WHERE id = 7\nDelete — DELETE /tasks/7 → DELETE FROM tasks WHERE id = 7',
+      'Create — `POST /tasks` → `INSERT INTO tasks …`\nRead — `GET /tasks/7` → `SELECT * FROM tasks WHERE id = 7`\nUpdate — `PATCH /tasks/7` → `UPDATE tasks SET done = true WHERE id = 7`\nDelete — `DELETE /tasks/7` → `DELETE FROM tasks WHERE id = 7`',
     whyItMatters:
       '“It’s just a CRUD app” means the work is mostly standard and predictable. Thinking in CRUD helps scope features: for each kind of data, who can create, read, update and delete it?',
     misconception:
@@ -566,7 +566,7 @@ const concepts: Concept[] = [
     analogy:
       'The index at the back of a textbook: instead of reading every page to find “photosynthesis”, you look it up alphabetically and jump to page 212.',
     example:
-      'CREATE INDEX idx_users_email ON users (email);\nNow SELECT * FROM users WHERE email = \'ana@example.com\'; goes from scanning 5 million rows (~2 s) to a few lookups (~1 ms).',
+      '`CREATE INDEX idx_users_email ON users (email);`\nNow `SELECT * FROM users WHERE email = \'ana@example.com\';` goes from scanning 5 million rows (~2 s) to a few lookups (~1 ms).',
     whyItMatters:
       'A missing index is one of the most common causes of a slow app, and adding one is often the cheapest big speedup available. But indexing everything slows down every insert and update.',
     misconception:
@@ -609,7 +609,7 @@ const concepts: Concept[] = [
     analogy:
       'A handshake deal where goods and payment swap at the same moment — if either side backs out, everything goes back to how it was.',
     example:
-      'BEGIN;\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\nUPDATE accounts SET balance = balance + 100 WHERE id = 2;\nCOMMIT;\nIf anything fails before COMMIT, ROLLBACK undoes both updates.',
+      '`BEGIN;`\n`UPDATE accounts SET balance = balance - 100 WHERE id = 1;`\n`UPDATE accounts SET balance = balance + 100 WHERE id = 2;`\n`COMMIT;`\nIf anything fails before `COMMIT`, `ROLLBACK` undoes both updates.',
     whyItMatters:
       'Transactions are why banks, checkouts and inventory systems can be trusted. Bugs like double-booked seats or negative stock often come from multi-step changes that weren’t in a transaction.',
     misconception:
@@ -653,7 +653,7 @@ const concepts: Concept[] = [
     analogy:
       'Numbered renovation instructions for a house. Every builder follows step 1, 2, 3 in order, so every copy of the house ends up with the same rooms.',
     example:
-      'File: 2026_10_09_001_add_phone_to_users.sql\nALTER TABLE users ADD COLUMN phone TEXT;\nRun with a tool like `npx prisma migrate deploy` or `rails db:migrate`; the database records that migration 001 has been applied.',
+      'File: `2026_10_09_001_add_phone_to_users.sql`\n`ALTER TABLE users ADD COLUMN phone TEXT;`\nRun with a tool like `npx prisma migrate deploy` or `rails db:migrate`; the database records that migration 001 has been applied.',
     whyItMatters:
       'Migrations are where databases most often break in production: a migration that locks a huge table can take a site down. They are reviewed like code, and often run in careful steps (add new column, backfill, then switch code over).',
     misconception:
@@ -704,7 +704,7 @@ const concepts: Concept[] = [
     analogy:
       'A notebook you carry in your bag versus a filing office across town. The notebook is always with you and needs no staff, but only one person writes in it comfortably at a time.',
     example:
-      'import Database from "better-sqlite3";\nconst db = new Database("app.db");  // one file\ndb.prepare("SELECT name FROM users WHERE id = ?").get(42);\nNo server to install, no password, no network.',
+      '`import Database from "better-sqlite3";`\n`const db = new Database("app.db");  // one file`\n`db.prepare("SELECT name FROM users WHERE id = ?").get(42);`\nNo server to install, no password, no network.',
     whyItMatters:
       'SQLite is perfect for mobile apps, desktop apps, prototypes and small sites — zero setup and very fast for one machine. Knowing when it’s enough (and when you need PostgreSQL) saves cost and complexity.',
     misconception:
@@ -747,7 +747,7 @@ const concepts: Concept[] = [
     analogy:
       'A professional records office with staff, locks and many service windows: lots of people can file and look things up at once, safely.',
     example:
-      'Connection string: postgres://app:secret@db.example.com:5432/shop\nSELECT name FROM users WHERE id = 42;\nHosted by Supabase, Neon, AWS RDS, Google Cloud SQL and others.',
+      'Connection string: `postgres://app:secret@db.example.com:5432/shop`\n`SELECT name FROM users WHERE id = 42;`\nHosted by Supabase, Neon, AWS RDS, Google Cloud SQL and others.',
     whyItMatters:
       'Postgres is one of the most popular databases in the world and a safe default for new products. Many hosted platforms (Supabase, Neon) are Postgres underneath, so learning it pays off widely.',
     misconception:
@@ -789,7 +789,7 @@ const concepts: Concept[] = [
     analogy:
       'A relational database is a set of strict spreadsheets; a document database is a filing cabinet of folders where each folder can hold whatever papers it needs.',
     example:
-      'MongoDB document:\n{ "_id": "u42", "name": "Ana", "addresses": [{ "city": "Lima" }, { "city": "Quito" }] }\nQuery: db.users.find({ "addresses.city": "Lima" })\nRedis: SET session:abc123 "user42" EX 3600',
+      'MongoDB document:\n`{ "_id": "u42", "name": "Ana", "addresses": [{ "city": "Lima" }, { "city": "Quito" }] }`\nQuery: `db.users.find({ "addresses.city": "Lima" })`\nRedis: `SET session:abc123 "user42" EX 3600`',
     whyItMatters:
       'Choosing between SQL and NoSQL shapes what’s easy later. NoSQL suits fast-changing or massively scaled data; relational databases suit data with lots of relationships and strict consistency, like billing.',
     misconception:
@@ -833,7 +833,7 @@ const concepts: Concept[] = [
     analogy:
       'Keeping your most-used spices on the counter instead of walking to the pantry each time. Faster, but someone has to restock when the pantry changes.',
     example:
-      'Without cache: product page → database query (80 ms).\nWith Redis: GET product:88 → hit (1 ms). On a miss, query the database, then SET product:88 <json> EX 300 (expires in 5 minutes).\nBrowsers cache too: Cache-Control: max-age=86400.',
+      'Without cache: product page → database query (80 ms).\nWith Redis: `GET product:88` → hit (1 ms). On a miss, query the database, then `SET product:88 <json> EX 300` (expires in 5 minutes).\nBrowsers cache too: `Cache-Control: max-age=86400`.',
     whyItMatters:
       'Caching is often the biggest single speed and cost win in a system. It also causes classic bugs: “I updated the price but customers still see the old one” is usually a stale cache.',
     misconception:
@@ -936,7 +936,7 @@ const concepts: Concept[] = [
     analogy:
       'A translator at a meeting: each side speaks its own language, and the translator turns one into the other so nobody has to learn both.',
     example:
-      'With Prisma (JavaScript):\nconst user = await prisma.user.findUnique({ where: { id: 42 } });\nUnder the hood it runs:\nSELECT "id", "name", "email" FROM "User" WHERE "id" = 42 LIMIT 1;\nOther ORMs: Django ORM, ActiveRecord (Rails), SQLAlchemy, Drizzle.',
+      'With Prisma (JavaScript):\n`const user = await prisma.user.findUnique({ where: { id: 42 } });`\nUnder the hood it runs:\n`SELECT "id", "name", "email" FROM "User" WHERE "id" = 42 LIMIT 1;`\nOther ORMs: Django ORM, ActiveRecord (Rails), SQLAlchemy, Drizzle.',
     whyItMatters:
       'ORMs speed up everyday development and protect against SQL injection by default. But they can hide expensive queries — the infamous “N+1 problem” where loading 100 posts quietly fires 101 queries.',
     misconception:

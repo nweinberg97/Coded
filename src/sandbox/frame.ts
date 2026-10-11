@@ -14,7 +14,7 @@ export type FrameListener = {
 };
 
 export const READY_TIMEOUT_MS = 5000;
-export const CHECK_TIMEOUT_MS = 5000;
+export const CHECK_TIMEOUT_MS = 15000;
 
 export class StuckError extends Error {
   constructor(msg: string) {
@@ -137,7 +137,7 @@ export class SandboxFrame {
       setTimeout(() => {
         if (this.pendingChecks.has(checkId)) {
           this.pendingChecks.delete(checkId);
-          resolve({ checkId, ok: false, detail: 'Timed out — the page may be stuck in a loop.' });
+          resolve({ checkId, ok: false, detail: 'Your page didn’t respond to the checker. Look in the Console tab for an error, or an endless loop.' });
         }
       }, CHECK_TIMEOUT_MS);
       // targetOrigin must be '*' for an opaque-origin frame; the payload

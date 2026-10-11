@@ -13,7 +13,7 @@ const concepts: Concept[] = [
     analogy:
       'A restaurant menu: you order from a fixed list in a known format, the kitchen does the work out of sight, and a dish comes back. You never walk into the kitchen.',
     example:
-      'A weather app sends GET https://api.weather.example/v1/forecast?city=Vancouver and gets back JSON like {"temp": 14, "sky": "rain"}. The app never touches the weather service’s database directly.',
+      'A weather app sends `GET https://api.weather.example/v1/forecast?city=Vancouver` and gets back JSON like `{"temp": 14, "sky": "rain"}`. The app never touches the weather service’s database directly.',
     whyItMatters:
       'Almost every modern product is stitched together with APIs — payments (Stripe), maps, login with Google, AI models. When engineers say "we can integrate with that", they usually mean "it has an API".',
     misconception:
@@ -65,7 +65,7 @@ const concepts: Concept[] = [
     analogy:
       'Departments in a big office building: the building is the API, and each endpoint is a specific room number you go to for one kind of help — billing is room 204, returns are room 310.',
     example:
-      'Stripe’s API has endpoints like POST https://api.stripe.com/v1/customers (create a customer) and GET https://api.stripe.com/v1/charges/ch_123 (look up one charge). Same API, different endpoints.',
+      'Stripe’s API has endpoints like `POST https://api.stripe.com/v1/customers` (create a customer) and `GET https://api.stripe.com/v1/charges/ch_123` (look up one charge). Same API, different endpoints.',
     whyItMatters:
       'API documentation is basically a list of endpoints. When a developer says "there’s no endpoint for that", they mean the API simply doesn’t offer that action — no matter how much the data exists behind it.',
     misconception:
@@ -120,7 +120,7 @@ const concepts: Concept[] = [
     analogy:
       'At a library desk, the book title is the URL and your verb is the method: "Can I borrow…", "I’m returning…", "Please reserve…". Same book, different action.',
     example:
-      'GET /api/tasks/7 reads task 7.\nPATCH /api/tasks/7 with {"done": true} marks it done.\nDELETE /api/tasks/7 removes it.\nOnly the method changed; the URL stayed the same.',
+      '`GET /api/tasks/7` reads task 7.\n`PATCH /api/tasks/7` with `{"done": true}` marks it done.\n`DELETE /api/tasks/7` removes it.\nOnly the method changed; the URL stayed the same.',
     whyItMatters:
       'Methods make APIs predictable: if you know an API follows the conventions, you can guess how to use it. They also matter for safety — browsers, caches and proxies treat GET as harmless and may repeat it, so using GET to delete something can cause real damage.',
     misconception:
@@ -169,7 +169,7 @@ const concepts: Concept[] = [
     analogy:
       'Looking up a word in a dictionary. You can look as many times as you like and the dictionary never changes.',
     example:
-      'GET https://api.github.com/users/octocat returns 200 OK with JSON like {"login": "octocat", "public_repos": 8}. Any extra options go in the URL as query parameters: GET /api/products?category=shoes&sort=price.',
+      '`GET https://api.github.com/users/octocat` returns `200 OK` with JSON like `{"login": "octocat", "public_repos": 8}`. Any extra options go in the URL as query parameters: `GET /api/products?category=shoes&sort=price`.',
     whyItMatters:
       'Because GETs are assumed harmless, browsers prefetch them, caches store them and crawlers follow them. A "delete" link built as a GET once let search-engine crawlers wipe out real data by simply visiting every link.',
     misconception:
@@ -212,7 +212,7 @@ const concepts: Concept[] = [
     analogy:
       'Dropping a filled-in form into an office’s inbox. You hand over new information, and they file it and give you a receipt number.',
     example:
-      'POST https://api.example.com/v1/orders\nContent-Type: application/json\n{"productId": 88, "quantity": 2}\n→ 201 Created, body {"id": 5012, "status": "pending"}',
+      '`POST https://api.example.com/v1/orders`\n`Content-Type: application/json`\n`{"productId": 88, "quantity": 2}`\n→ `201 Created`, body `{"id": 5012, "status": "pending"}`',
     whyItMatters:
       'POST is how users put information into a system. It is not idempotent: sending the same POST twice usually creates two things — the reason checkout pages warn "don’t refresh" and why payment APIs use idempotency keys.',
     misconception:
@@ -256,7 +256,7 @@ const concepts: Concept[] = [
     analogy:
       'Replacing a document in a folder: you don’t mark up the old page, you pull it out and slot in a fresh, complete page.',
     example:
-      'Current profile: {"name": "Ana", "email": "ana@x.com", "city": "Lima"}\nPUT /api/users/42 with {"name": "Ana", "email": "ana@new.com"}\nResult: {"name": "Ana", "email": "ana@new.com"} — city is gone, because PUT replaced the whole record.',
+      'Current profile: `{"name": "Ana", "email": "ana@x.com", "city": "Lima"}`\n`PUT /api/users/42` with `{"name": "Ana", "email": "ana@new.com"}`\nResult: `{"name": "Ana", "email": "ana@new.com"}` — city is gone, because PUT replaced the whole record.',
     whyItMatters:
       'Knowing PUT replaces everything prevents accidental data loss: two people editing the same record with PUT can silently overwrite each other’s changes. It also explains why many APIs prefer PATCH for edits.',
     misconception:
@@ -301,7 +301,7 @@ const concepts: Concept[] = [
     analogy:
       'Correcting a typo with correction fluid instead of retyping the whole letter.',
     example:
-      'Current task: {"id": 7, "title": "Call bank", "done": false, "due": "2026-10-12"}\nPATCH /api/tasks/7 with {"done": true}\nResult: {"id": 7, "title": "Call bank", "done": true, "due": "2026-10-12"} — only "done" changed.',
+      'Current task: `{"id": 7, "title": "Call bank", "done": false, "due": "2026-10-12"}`\n`PATCH /api/tasks/7` with `{"done": true}`\nResult: `{"id": 7, "title": "Call bank", "done": true, "due": "2026-10-12"}` — only `"done"` changed.',
     whyItMatters:
       'PATCH lets several features edit the same record without stepping on each other — one updates the title while another ticks “done”. It also sends less data, which matters on slow mobile connections.',
     misconception:
@@ -345,7 +345,7 @@ const concepts: Concept[] = [
     analogy:
       'Asking the librarian to take a specific book off the shelf and out of the catalogue.',
     example:
-      'DELETE https://api.example.com/v1/comments/981\nAuthorization: Bearer eyJhb…\n→ 204 No Content (deleted, nothing to send back). Calling it again returns 404 Not Found.',
+      '`DELETE https://api.example.com/v1/comments/981`\n`Authorization: Bearer eyJhb…`\n→ `204 No Content` (deleted, nothing to send back). Calling it again returns `404 Not Found`.',
     whyItMatters:
       'Destructive actions need the strongest checks: the API must verify you are allowed to delete that specific item. Many products “soft delete” instead — hiding the row so it can be restored — which affects privacy promises like “we deleted your data”.',
     misconception:
@@ -387,7 +387,7 @@ const concepts: Concept[] = [
     analogy:
       'The letter inside an envelope. The address on the outside is the URL; the headers are the stamps and postmarks; the body is what you actually wrote.',
     example:
-      'POST /api/signup\nContent-Type: application/json\n\n{"email": "sam@example.com", "password": "correct-horse-battery", "plan": "pro"}\n\nEverything inside the braces is the request body.',
+      '`POST /api/signup`\n`Content-Type: application/json`\n\n`{"email": "sam@example.com", "password": "correct-horse-battery", "plan": "pro"}`\n\nEverything inside the braces is the request body.',
     whyItMatters:
       'Most bugs in a form or integration come down to the body: a missing field, a wrong name ("e_mail" instead of "email") or the wrong format. The server will typically answer 400 Bad Request or 422 Unprocessable Entity.',
     misconception:
@@ -441,7 +441,7 @@ const concepts: Concept[] = [
     analogy:
       'The dish that comes out of the kitchen. The waiter’s “here you go” is the status code; the plate itself is the body.',
     example:
-      'GET /api/users/42 → 200 OK\nContent-Type: application/json\n\n{"id": 42, "name": "Priya", "plan": "pro", "joined": "2025-03-01"}\n\nOn failure, the body often explains why: {"error": "user_not_found"} with 404.',
+      '`GET /api/users/42` → `200 OK`\n`Content-Type: application/json`\n\n`{"id": 42, "name": "Priya", "plan": "pro", "joined": "2025-03-01"}`\n\nOn failure, the body often explains why: `{"error": "user_not_found"}` with `404`.',
     whyItMatters:
       'Everything an app shows from a server comes from a response body. When a screen shows the wrong thing, engineers open the network tab and check the body to see whether the server sent bad data or the app displayed it wrong.',
     misconception:
@@ -493,7 +493,7 @@ const concepts: Concept[] = [
     analogy:
       'A traffic light for every reply: green (2xx, all good), yellow (3xx, take a detour), red (4xx, you did something wrong; 5xx, the road is broken).',
     example:
-      '200 OK — here’s your data.\n201 Created — your new order exists.\n301 Moved Permanently — it lives at a new URL.\n400 Bad Request — your input was malformed.\n401 Unauthorized — who are you?\n403 Forbidden — you can’t do that.\n404 Not Found — no such thing.\n429 Too Many Requests — slow down.\n500 Internal Server Error — the server crashed.',
+      '`200 OK` — here’s your data.\n`201 Created` — your new order exists.\n`301 Moved Permanently` — it lives at a new URL.\n`400 Bad Request` — your input was malformed.\n`401 Unauthorized` — who are you?\n`403 Forbidden` — you can’t do that.\n`404 Not Found` — no such thing.\n`429 Too Many Requests` — slow down.\n`500 Internal Server Error` — the server crashed.',
     whyItMatters:
       'Status codes are the first thing to check when something breaks. 4xx means fix the request (wrong input, missing login); 5xx means the problem is on the server side. That one digit often tells you which team should look at the bug.',
     misconception:
@@ -537,7 +537,7 @@ const concepts: Concept[] = [
     analogy:
       'The writing on a parcel: sender, recipient, “fragile”, “keep upright”. It isn’t the contents, but it tells everyone how to handle them.',
     example:
-      'GET /api/invoices\nAuthorization: Bearer sk_live_abc123\nAccept: application/json\nUser-Agent: Coded/1.0\n\nResponse:\nContent-Type: application/json\nCache-Control: max-age=3600\nX-RateLimit-Remaining: 57',
+      '`GET /api/invoices`\n`Authorization: Bearer sk_live_abc123`\n`Accept: application/json`\n`User-Agent: Coded/1.0`\n\nResponse:\n`Content-Type: application/json`\n`Cache-Control: max-age=3600`\n`X-RateLimit-Remaining: 57`',
     whyItMatters:
       'Many “mysterious” API failures are header problems: a missing Authorization header gives 401, the wrong Content-Type makes the server misread the body, missing CORS headers make browsers block the response.',
     misconception:
@@ -582,7 +582,7 @@ const concepts: Concept[] = [
     analogy:
       'Ordering “coffee” is the endpoint; “?size=large&milk=oat” are the options you add to the same order.',
     example:
-      'https://shop.example.com/api/products?category=shoes&sort=price&page=2\n\nEndpoint: /api/products. Query parameters: category=shoes, sort=price, page=2. Google uses them too: google.com/search?q=what+is+an+api',
+      '`https://shop.example.com/api/products?category=shoes&sort=price&page=2`\n\nEndpoint: `/api/products`. Query parameters: `category=shoes`, `sort=price`, `page=2`. Google uses them too: `google.com/search?q=what+is+an+api`',
     whyItMatters:
       'Query parameters make URLs shareable and bookmarkable — a filtered search can be sent as a link. They also power marketing tracking (utm_source=newsletter) and pagination in almost every API.',
     misconception:
@@ -632,7 +632,7 @@ const concepts: Concept[] = [
     analogy:
       'A well-organised filing cabinet with standard labels: once you know how one drawer works, you can guess how every drawer works.',
     example:
-      'GET /orders — list orders\nPOST /orders — create an order\nGET /orders/5012 — read one order\nPATCH /orders/5012 — update it\nDELETE /orders/5012 — cancel it\nNouns in the URL, verbs from HTTP.',
+      '`GET /orders` — list orders\n`POST /orders` — create an order\n`GET /orders/5012` — read one order\n`PATCH /orders/5012` — update it\n`DELETE /orders/5012` — cancel it\nNouns in the URL, verbs from HTTP.',
     whyItMatters:
       '“REST API” is the default meaning of “API” in most companies. Following REST conventions makes an API guessable, cacheable and easy for other teams and partners to use without hand-holding.',
     misconception:
@@ -683,7 +683,7 @@ const concepts: Concept[] = [
     analogy:
       'Polling is checking your mailbox every ten minutes. A webhook is the doorbell: the courier rings you when the parcel actually arrives.',
     example:
-      'You register https://myshop.com/hooks/stripe with Stripe. When a customer pays, Stripe sends:\nPOST /hooks/stripe\n{"type": "payment_intent.succeeded", "data": {"amount": 4900, "currency": "usd"}}\nYour server marks the order paid and replies 200 OK.',
+      'You register `https://myshop.com/hooks/stripe` with Stripe. When a customer pays, Stripe sends:\n`POST /hooks/stripe`\n`{"type": "payment_intent.succeeded", "data": {"amount": 4900, "currency": "usd"}}`\nYour server marks the order paid and replies `200 OK`.',
     whyItMatters:
       'Webhooks make automation possible — Zapier, Slack bots, payment confirmations and GitHub deploys all run on them. They’re faster and cheaper than asking “anything new?” over and over.',
     misconception:
@@ -730,7 +730,7 @@ const concepts: Concept[] = [
     analogy:
       'A hotel key card: it identifies your room and opens certain doors, and if someone copies it, they can get in too.',
     example:
-      'curl https://api.openai.example/v1/models \\\n  -H "Authorization: Bearer sk-proj-4f9a…"\nA request without the key gets 401 Unauthorized; a key that’s used too heavily gets 429 Too Many Requests.',
+      '`curl https://api.openai.example/v1/models \\`\n  `-H "Authorization: Bearer sk-proj-4f9a…"`\nA request without the key gets `401 Unauthorized`; a key that’s used too heavily gets `429 Too Many Requests`.',
     whyItMatters:
       'Leaked API keys are one of the most common security incidents — pushed to GitHub, pasted in screenshots, shipped inside mobile apps. Anyone with your key can run up your bill or access your data, so keys belong in environment variables on a server.',
     misconception:
@@ -774,7 +774,7 @@ const concepts: Concept[] = [
     analogy:
       'A ticket gate that lets through at most 60 people a minute. Arrive in a rush and you queue until the next minute starts.',
     example:
-      'Response headers: X-RateLimit-Limit: 100, X-RateLimit-Remaining: 0, Retry-After: 30\nStatus: 429 Too Many Requests\nYour code should wait 30 seconds before trying again.',
+      'Response headers: `X-RateLimit-Limit: 100`, `X-RateLimit-Remaining: 0`, `Retry-After: 30`\nStatus: `429 Too Many Requests`\nYour code should wait 30 seconds before trying again.',
     whyItMatters:
       'Rate limits shape what a product can do: syncing 50,000 contacts at 10 requests per second takes over an hour. They’re also a defence against abuse like password guessing and scraping.',
     misconception:
@@ -825,7 +825,7 @@ const concepts: Concept[] = [
     analogy:
       'The API is the restaurant’s menu; the SDK is a delivery app that already knows the menu and fills in the order form for you.',
     example:
-      'Raw API: POST https://api.stripe.com/v1/customers with headers and form data.\nWith Stripe’s Node SDK:\nconst customer = await stripe.customers.create({ email: "ana@x.com" });\nThe SDK sends the same HTTP request underneath.',
+      'Raw API: `POST https://api.stripe.com/v1/customers` with headers and form data.\nWith Stripe’s Node SDK:\n`const customer = await stripe.customers.create({ email: "ana@x.com" });`\nThe SDK sends the same HTTP request underneath.',
     whyItMatters:
       'A good SDK can turn days of integration into an afternoon, and handles details like retries, pagination and auth. When choosing a vendor, “do they have an SDK for our language?” is a real factor in effort estimates.',
     misconception:
@@ -876,7 +876,7 @@ const concepts: Concept[] = [
     analogy:
       'A plumber connecting two buildings’ water pipes: each building already had pipes (APIs); the integration is the joining work in between.',
     example:
-      'A Slack–GitHub integration: GitHub sends a webhook when a pull request opens; the integration code calls Slack’s API (POST https://slack.com/api/chat.postMessage) to announce it in #engineering.',
+      'A Slack–GitHub integration: GitHub sends a webhook when a pull request opens; the integration code calls Slack’s API (`POST https://slack.com/api/chat.postMessage`) to announce it in `#engineering`.',
     whyItMatters:
       '“Does it integrate with X?” is one of the most common sales questions. Integrations are a big part of a product’s value and a big source of maintenance: when either side changes its API, the integration can break.',
     misconception:
@@ -927,7 +927,7 @@ const concepts: Concept[] = [
     analogy:
       'A hotel valet key: it starts the car and parks it, but doesn’t open the trunk or glovebox — and you can cancel it without changing your own key.',
     example:
-      '1. App redirects you to https://accounts.google.com/o/oauth2/auth?client_id=…&scope=calendar.readonly\n2. You approve.\n3. Google redirects back with a one-time code.\n4. The app exchanges the code for an access token and calls GET /calendar/v3/events with Authorization: Bearer ya29.a0…',
+      '1. App redirects you to `https://accounts.google.com/o/oauth2/auth?client_id=…&scope=calendar.readonly`\n2. You approve.\n3. Google redirects back with a one-time code.\n4. The app exchanges the code for an access token and calls `GET /calendar/v3/events` with `Authorization: Bearer ya29.a0…`',
     whyItMatters:
       'OAuth powers “Sign in with Google/Apple/GitHub” and nearly every “connect your account” button. It means apps never hold your password, permissions can be narrow, and you can revoke access any time from your account settings.',
     misconception:

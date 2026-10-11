@@ -40,7 +40,7 @@ export function HomePage() {
             software <span className="accent-word">actually</span> works.
           </h1>
           <p className="lede">
-            Commit 170 concept cards to memory, earn XP for real understanding, and ship working code in a live sandbox. No account, no setup — your progress stays in this browser.
+            A hands-on course in how software works, for people who don’t write code (yet). Learn the language engineers use, prove you understand it to level up, then write real code that runs right in your browser.
           </p>
           <div className="hero-ctas">
             <button className="btn btn-primary btn-lg" onClick={() => navigate('/learn')} data-testid="continue">
@@ -50,7 +50,7 @@ export function HomePage() {
               Try the demo
             </Link>
           </div>
-          {isNew && <p className="hero-foot">Takes 30 seconds. Type an answer in your own words — no multiple choice.</p>}
+          {isNew && <p className="hero-foot">Free, no account, nothing to install. Your progress stays in this browser.</p>}
         </div>
         <div className="hero-fan" aria-hidden>
           {fan.map((c, i) => (
@@ -59,6 +59,25 @@ export function HomePage() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="how" aria-labelledby="how-h">
+        <h2 id="how-h" className="sr-only">How Coded works</h2>
+        <Link to="/learn" className="how-step">
+          <span className="how-n">01</span>
+          <span className="how-k"><Icon name="cards" size={18} /> Learn the language</span>
+          <p>170 concepts — API, database, Git, AI. Explain each one in your own words; the checker tells you what you got and what’s missing. No multiple choice.</p>
+        </Link>
+        <Link to="/me" className="how-step">
+          <span className="how-n">02</span>
+          <span className="how-k"><Icon name="bolt" size={18} /> Level up</span>
+          <p>Earn XP for real understanding. Seven levels unlock harder modules, and smart reviews bring cards back right before you’d forget them.</p>
+        </Link>
+        <Link to="/build" className="how-step">
+          <span className="how-n">03</span>
+          <span className="how-k"><Icon name="code" size={18} /> Build for real</span>
+          <p>Eight coding projects — a webpage, a working button, an API, a database. Write code, see it run, and watch “under the hood” explain what happened.</p>
+        </Link>
       </section>
 
       {!isNew && (
@@ -191,7 +210,7 @@ export function HomePage() {
       <section className="home-duo">
         {nextDrop && (
           <Link to={`/build/${nextDrop.id}`} className="promo promo-build" style={{ ['--c1' as string]: nextDrop.colorway[0], ['--c2' as string]: nextDrop.colorway[1] }}>
-            <div className="eyebrow">Build · Drop {String(nextDrop.number).padStart(2, '0')}</div>
+            <div className="eyebrow">Build · Project {String(nextDrop.number).padStart(2, '0')}</div>
             <h3>{nextDrop.title}</h3>
             <p>{nextDrop.tagline} Edit real code, run it, ship it.</p>
             <span className="promo-cta">Open the sandbox <Icon name="arrow" size={16} /></span>
